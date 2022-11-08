@@ -1,0 +1,42 @@
+.allcontain{
+    display: flex; 
+    width: 80%;
+    
+}
+
+
+
+
+/* Menu admin */
+
+.vertical-menu {
+    width: 30%; /* Set a width if you like */
+  }
+  
+  .vertical-menu a {
+    background-color: #eee; /* Grey background color */
+    color: black; /* Black text color */
+    display: block; /* Make the links appear below each other */
+    padding: 12px; /* Add some padding */
+    text-decoration: none; /* Remove underline from links */
+  }
+  
+  .vertical-menu a:hover {
+    background-color: #ccc; 
+  }
+  
+  .vertical-menu a.active {
+    background-color: #00d788; 
+    color: #eee;
+  }
+
+  /* container admin */
+
+  #containtadmin{
+    /* background: red; */
+    width: 70%;
+    
+  }
+  .target{
+    display: none;
+  }

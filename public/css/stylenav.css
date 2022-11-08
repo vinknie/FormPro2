@@ -1,0 +1,103 @@
+html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+    }
+
+
+    body {
+        font-family: "Helvetica Neue",sans-serif;
+        font-weight: lighter;
+    }
+     /* LE STYLE DU HEADER */
+     header {
+        width: 100%;
+        height:30vh;
+        background: url('https://picsum.photos/1000') no-repeat 50% 50%;
+        background-size: cover;
+    }
+
+/* LE STYLE DE LA NAVBAR */
+.nameSite {
+    line-height: 60px;
+    position: fixed;
+    float: left;
+    margin: 16px 46px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 20px;
+    letter-spacing: 2px;
+}
+
+nav {
+    position: fixed;
+    width: 100%;
+    line-height: 60px;
+    z-index: 1000;
+}
+
+nav ul {
+    line-height: 60px;
+    list-style: none;
+    background: rgba(0, 0, 0, 0);
+    overflow: hidden;
+    color: #fff;
+    padding: 0;
+    text-align: right;
+    margin: 0;
+    padding-right: 40px;
+    transition: 1s;
+}
+
+nav.black ul {
+    background: #000;
+}
+
+nav ul li {
+    display: inline-block;
+    padding: 16px 40px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+}
+
+
+#scrolling-menu li {
+/* mettre le menu en horizontal */
+    display: inline-block;
+}
+#scrolling-menu ul li {
+/* Enleve l'effet Horizontal  */
+    display: inherit;
+}
+
+#scrolling-menu ul {
+    /* Deplace le sous menu en dehors de l'ecran  */
+    position: absolute;
+    left: -999em;
+    text-align: left;
+    z-index: 1000;
+}
+#scrolling-menu li:hover ul {
+/* Faire revenir les menus au hover*/
+    left: auto;
+    background-color: black;
+}
+#scrolling-menu li:hover{
+/* Changer la color au hover */
+    background-color: black;
+}
+nav ul li a:hover{
+
+color: white;
+text-decoration:none;
+
+}
+
+
+
+
+/* Nav backoffice 2 */
