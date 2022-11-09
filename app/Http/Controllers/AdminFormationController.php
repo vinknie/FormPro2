@@ -37,12 +37,12 @@ class AdminFormationController extends Controller
         return $selectformateur ;
         
     }
+    
     public function backOfficeFormation()
       {
         $getformations=Formation::all();
-        // $getformations = Formation::join('matiere','formation.id_formation','=','matiere.id_formation')
-        //                 ->get(['formation.*','matiere.*']);
-
+        
+        
         $selectformateur=$this->formationSelectFormateur();
       
         return view('admin.formation', compact('selectformateur','getformations'));
@@ -120,6 +120,12 @@ class AdminFormationController extends Controller
         $deleteformation = Formation::find($id_formation)->delete();
 
         return redirect()->route('admin.formation');
+    }
+
+    public function showMatiere($id_formation){
+
+        $getmatieres=DB::select('select nom from matiere where id_formation = '.$id_formation);
+        return $getmatieres;
     }
 
 

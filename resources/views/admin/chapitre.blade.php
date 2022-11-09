@@ -43,6 +43,34 @@
 </form>
 
 <hr>
+<h1 class="text-center">Modifier les Chapitres Via les Matieres</h1>
+<select name="id_formation2" id="id_formation2">
+    <option value="">Select Formation</option>
+    @if(count($formations) > 0)
+        @foreach ($formations as $formation )
+            <option value="{{ $formation['id_formation'] }}">{{ $formation->nom }}</option>
+        @endforeach
+    @endif
+</select>
+
+<table class="table table-bordered">
+    <tr>
+        <td>ID Matiere</td>
+        <th>Nom de la matiere</th>     
+        <td colspan = 2>Action</td>
+    </tr>
+    <tbody id="tbody">
+    {{-- @if (count($matieres) > 0 )
+        @foreach ($matieres as $matiere)
+            <tr>
+                <td>{{ $matiere['id_matiere']}}</td>
+                <td>{{ $matiere['nom']}}</td>
+                <td><a href="{{ route('admin.editchapitre', $matiere->id_matiere) }}" class="btn btn-primary">Edit</a></td>
+            </tr>
+        @endforeach        
+    @endif --}}
+    </tbody>
+</table>
 
 
 
@@ -70,12 +98,6 @@
                     }
                 });
 
-                // async function test() {
-                //     const res = await fetch('/backoffice/chapitre/getMatieres/' +formationID);
-                //     const data = await res;
-                //     console.log(data);
-                // }
-                // test();
             }
             else{
                 $('select[name="id_matiere"]').empty();
@@ -96,6 +118,41 @@ $("#adddd").click(function(){
             $(this).closest('tr').remove();
             // x--;
         })
+
+
+        $("#id_formation2").on('change',function(){
+            var formation = $(this).val();
+            $.ajax({
+                url : '/backoffice/chapitre/filterMatiere',
+                type:"GET",
+                data:{'formation':formation},
+                success:function(data){
+                    var matieres = data.matieres;
+                    var html = '';
+                    if(matieres.length > 0){
+                        for(let i = 0; i<matieres.length; i++){
+                            html += '<tr>\
+                                <td>'+matieres[i]['id_matiere']+'</td>\
+                                <td>'+matieres[i]['nom']+'</td>\
+                                <td><a href="/backoffice/chapitre/editchapitre/'+matieres[i]["id_matiere"]+'" class="btn btn-primary">Edit</a></td>\
+                                </tr>';
+                            console.log(matieres[i]['id_matiere']);
+                        }
+
+                    
+
+                    }
+                    else{
+                        html += '<tr>\
+                            <td>Pas de Matiere Trouvé</td>\
+                            </tr>';
+                    }
+                    $("#tbody").html(html);
+                    console.log(data);
+                }
+            })
+        })
+
 
     });
 

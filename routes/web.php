@@ -104,6 +104,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
 
     Route::delete('backoffice/formation/delete/{id_formation}', 'AdminFormationController@deleteFormation')->name('admin.delete');
 
+    Route::get('/backoffice/formation/showMatiere/{id_formation}','AdminFormationController@showMatiere');
+
     /* ROUTE ADMIN BACKOFFICE 2 Chapitre */
 
     Route::get('/backoffice/chapitre', 'AdminChapitreController@chapitre')->name('admin.chapitre');
@@ -111,6 +113,12 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
     Route::get('/backoffice/chapitre/getMatieres/{id_formation}','AdminChapitreController@getMatieres')->name('getMatieres');
 
     Route::post('/backoffice/chapitre/createChapitre','AdminChapitreController@createChapitre');
+
+    Route::get('/backoffice/chapitre/filterMatiere','AdminChapitreController@filterMatiere')->name('filterMatiere');
+
+    Route::get('/backoffice/chapitre/editchapitre/{id_matiere}', 'AdminChapitreController@editMatiere')->name('admin.editchapitre');
+
+    Route::post('backoffice/chapitre/updateChapitre', 'AdminChapitreController@updateChapitre')->name('admin.updateChapitre');
 
    
    
