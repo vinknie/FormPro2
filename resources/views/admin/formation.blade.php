@@ -73,15 +73,19 @@
                             <tr>
                                 <td>
                                     <h2 class="accordion-header" id="heading-{{ $getformation->id_formation }}">
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ $getformation->id_formation }}" aria-expanded="true" aria-controls="collapse-{{ $getformation->id_formation }}">+
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" id="{{ $getformation->id_formation }}" data-bs-target="#collapse-{{ $getformation->id_formation }}" aria-expanded="true" aria-controls="collapse-{{ $getformation->id_formation }}">+
                                         </button>
                                       </h2>
-                                      <div id="collapse-{{ $getformation->id_formation }}" class="accordion-collapse collapse show" aria-labelledby="heading-{{ $getformation->id_formation }}" data-bs-parent="#accordionExample">
+                                     
+                                    {{$getformation->nom}}
+                                    <div id="collapse-{{ $getformation->id_formation }}" class="accordion-collapse collapse show" aria-labelledby="heading-{{ $getformation->id_formation }}" data-bs-parent="#accordionExample">
                                         <div class="accordion-body">
-                                          {{ $getformation->nom }}
+                                            {{-- @foreach ( $getmatieres as $getmatiere)
+                                            {{ $getmatiere->nom }}
+                                            @endforeach --}}
+                                          
                                         </div>
-                                      </div>
-                                    {{$getformation->nom}} </td>
+                                      </div> </td>
                                 <td>{{$getformation->date_debut}}</td>
                                 <td>{{$getformation->date_fin}}</td>
                                 <td>
@@ -123,6 +127,41 @@ $("#addd").click(function(){
             $(this).closest('tr').remove();
             // x--;
         })
+
+       
+        jQuery('.accordion-button').on('click',function(){
+            var formationID = jQuery(this).attr('id');
+            
+            if(formationID)
+            {
+                jQuery.ajax({
+                    url : '/backoffice/formation/showMatiere/' +formationID,
+                    type : "GET",
+                    dataType : "json",
+                    success:function(data)
+                    {
+                        
+                        jQuery("#collapse-"+formationID+" .accordion-body").empty();
+                        jQuery.each(data, function(key,value){
+                            $("#collapse-"+formationID+" .accordion-body").append(value.nom +" ");
+                            
+                        });
+                    }
+                });
+
+                // async function test() {
+                //     const res = await fetch('/backoffice/chapitre/getMatieres/' +formationID);
+                //     const data = await res;
+                //     console.log(data);
+                // }
+                // test();
+            }
+            else{
+                $('select[name="id_matiere"]').empty();
+            }
+        });
+
+
 </script>
 
 @endsection

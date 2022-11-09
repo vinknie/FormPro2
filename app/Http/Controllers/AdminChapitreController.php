@@ -28,8 +28,13 @@ class AdminChapitreController extends Controller
     
     public function chapitre() 
     {
+        $matieres = Matiere::all();
         $formations = Formation::all();
-        return view('admin.chapitre', compact('formations'));
+        
+        
+        
+        return view('admin.chapitre',compact('matieres','formations'));
+
     }
 
     public function getMatieres($id_formation){
@@ -57,5 +62,56 @@ class AdminChapitreController extends Controller
 
       }
 
+    public function filterMatiere(Request $request){
+
+        $query = Matiere::query();
+        $formations = Formation::all();
+
+        if($request->ajax()){
+            if(empty($request->formation)){
+                $matieres = $query->get();
+            }
+            else{
+            $matieres= $query->where(['id_formation'=>$request->formation])->get();
+            }
+            return response()->json(['matieres'=>$matieres]);
+        }
+        $matieres= $query->get();
+        
+        return view('admin.chapitre',compact('matieres','formations'));
+
+    }
+
+    public function editMatiere($id_matiere)
+    {
+        $matieres= Matiere::find($id_matiere);
+        $chapitres=DB::select('select id_chapitre, nom, id_matiere  from chapitre where id_matiere = '.$id_matiere);
+        $chapitre= Chapitre::all();
+    
+        return view('admin.editchapitre' , compact('matieres','chapitres','chapitre'));
+        
+    }
+
+    public function updateChapitre(Request $request){
+
+
+
+        foreach($request->nomchapitre as $key => $value){
+            if(isset($request->id_chapitre[$key])){
+                $chapitres = Chapitre::find($request->id_chapitre[$key]);
+            }else{
+                $chapitres= new Chapitre();
+            }
+                $chapitres->id_matiere = $request->id_matiere;
+                $chapitres->nom = $request->nomchapitre[$key];
+                
+
+            $chapitres->save();
+        }
+
+
+        return redirect()->route('admin.chapitre');
+    }
+    
 
 }
