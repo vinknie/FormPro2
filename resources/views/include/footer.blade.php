@@ -3,7 +3,7 @@
     <div class="footer-left">
         <iframe style="border: 0;" src="" width="300" height="300"
                 frameborder="0"></iframe>
-        <p class="footer-copyright"> © 2022 - SecondProjet </p>
+        <p class="footer-copyright"> © 2022 - FormPro - KNIEWALLNER Vincent </p>
     </div>
 
     <div class="footer-center">
@@ -34,8 +34,7 @@
 
             <input type="text" name="email" placeholder="Votre Email">
             <textarea name="message" placeholder="Votre Message"></textarea>
-            <input class="button" type="submit" placeholder="Envoyer"></input>
-
+            <input class="button" type="submit" placeholder="Envoyer">
         </form>
         <p class="redirection"> *Vous serez redirigé vers l'accueil a l'envoye du mail</p>
     </div>

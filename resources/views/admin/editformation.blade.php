@@ -51,7 +51,8 @@
                         @if ($loop->first)
                         <input class="btn btn-warning" type="button" name="addd" id="addd" value="Ajouter">
                         @endif
-                        <input class="btn btn-warning" type="button" name="remove" id="remove" value="Supprimer">
+                        <a href="{{ URL::to('backoffice/formation/editformation/delete' ,$getmatiere->id_matiere) }}" data-method="delete" >
+                        <input class="btn btn-danger" type="button" name="remove" id="remove" value="Supprimer"></a>
                     </td>
                         
                 </tr>

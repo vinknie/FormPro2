@@ -122,6 +122,16 @@ class AdminFormationController extends Controller
         return redirect()->route('admin.formation');
     }
 
+    public function deleteMatiere($id_matiere)
+    {
+        
+        $deleteMatiere = Matiere::find($id_matiere)->delete();
+
+        return redirect()->back();
+    }
+    
+
+
     public function showMatiere($id_formation){
 
         $getmatieres=DB::select('select nom from matiere where id_formation = '.$id_formation);

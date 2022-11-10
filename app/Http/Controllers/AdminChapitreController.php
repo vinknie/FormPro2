@@ -106,11 +106,20 @@ class AdminChapitreController extends Controller
                 $chapitres->nom = $request->nomchapitre[$key];
                 
 
+
             $chapitres->save();
         }
 
 
         return redirect()->route('admin.chapitre');
+    }
+
+    public function deleteChapitre($id_chapitre)
+    {
+        
+        $deleteChapitre = Chapitre::find($id_chapitre)->delete();
+
+        return redirect()->back();
     }
     
 
