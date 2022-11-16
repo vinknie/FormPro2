@@ -8,6 +8,9 @@
         <li class="nav-item">
           <a class="nav-link" href="{{ route('admin.chapitre') }}">Chapitre</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('admin.fichier') }}">Fichier</a>
+        </li>
       </ul>
     </div>
   </nav>

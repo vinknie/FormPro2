@@ -30,43 +30,16 @@ class PagesController extends Controller
     }
     
 
-    /* function uploadfile*/
-    public function uploadfile(Request $request)
-    {
-
-        $data=new file();
-
-        $file=$request->file;
-
-        $filename=time().'.'.$file->getClientOriginalExtension();
-
-        $request->file->move('assets',$filename);
-
-        $data->file=$filename;
-
-        $data->name=$request->name;
-        $data->description=$request->description;
-        $data->extension=$request->extension;
-
-        $data->save();
-        return redirect()->back();
-
-
-
-    }
+   
 
     /* function elearning */
     public function elearning()
     {
         return view('pages.elearning');
     }
+    
 
-        /* function vue et download des fichiers */
-    public function cours()
-    {
-        $data=DB::select('select * from files where extension = "PDF"');
-        return view('pages.cours',compact('data'));
-    }
+    
     public function download(Request $request,$file)
     {
         return response()->download(public_path('assets/'.$file));

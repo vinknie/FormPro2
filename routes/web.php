@@ -124,7 +124,32 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
 
     Route::get('backoffice/chapitre/editchapitre/delete/{id_chapitre}', 'AdminChapitreController@deleteChapitre')->name('admin.deleteChapitre');
 
+    /* ROUTE ADMIN BACKOFFICE 2 Fichier */
+
+    Route::get('/backoffice/fichier', 'AdminFichierController@fichierview')->name('admin.fichier');
+
+    Route::get('/backoffice/fichier/getMatieres/{id_formation}','AdminFichierController@getMatieres')->name('getMatieresInFile');
+
+    Route::get('/backoffice/fichier/filterMatiere','AdminFichierController@filterMatiereInFile')->name('filterMatiereInFile');
+
+    Route::get('/backoffice/fichier/getChapitre/{id_matiere}','AdminFichierController@getChapitre')->name('getChapitreInFile');
+
+    Route::get('/backoffice/fichier/filterChapitre','AdminFichierController@filterChapitre')->name('filterChapitreInFile');
+
+    Route::post('/backoffice/fichier/createFichier','AdminFichierController@createFichier');
    
+
+    /* Route Elearnling User */
+    Route::get('/cours','ElearningUserController@cours')->name('pages.cours');
+
+    Route::get('/cours/getMatieres/{id_formation}','ElearningUserController@getMatieres');
+
+    Route::get('/cours/filterMatiere','ElearningUserController@filterMatiere');
+
+    Route::get('/cours/getChapitre/{id_matiere}','ElearningUserController@getChapitre');
+
+    Route::get('/cours/filterChapitre','ElearningUserController@filterChapitre');
+
    
     
     

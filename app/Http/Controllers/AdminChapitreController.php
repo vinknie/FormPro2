@@ -53,6 +53,7 @@ class AdminChapitreController extends Controller
             array_push($chapitres,[
                 'id_matiere' => $request->id_matiere,
                 'nom' => $request->nomchapitre[$key],
+                'description' => $request->description[$key],
             ]);
         }
 
@@ -85,7 +86,7 @@ class AdminChapitreController extends Controller
     public function editMatiere($id_matiere)
     {
         $matieres= Matiere::find($id_matiere);
-        $chapitres=DB::select('select id_chapitre, nom, id_matiere  from chapitre where id_matiere = '.$id_matiere);
+        $chapitres=DB::select('select id_chapitre, nom, description, id_matiere  from chapitre where id_matiere = '.$id_matiere);
         $chapitre= Chapitre::all();
     
         return view('admin.editchapitre' , compact('matieres','chapitres','chapitre'));
@@ -104,6 +105,7 @@ class AdminChapitreController extends Controller
             }
                 $chapitres->id_matiere = $request->id_matiere;
                 $chapitres->nom = $request->nomchapitre[$key];
+                $chapitres->description = $request->description[$key];
                 
 
 

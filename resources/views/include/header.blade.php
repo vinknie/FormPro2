@@ -35,7 +35,7 @@
     @endauth
     <li><a href="{{ route('pages.satisfaction') }}">Satisfaction</a></li>  
       
-      <li><a href="{{ route('pages.admin') }}">BackOffice</a></li>
+      {{-- <li><a href="{{ route('pages.admin') }}">BackOffice</a></li> --}}
 
       <li><a href="{{ route('admin.backoffice') }}">BackOffice2</a></li>
 

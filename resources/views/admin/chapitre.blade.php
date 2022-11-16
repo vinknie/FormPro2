@@ -25,10 +25,12 @@
         <table class="table table-bordered" id="table_field2">
             <tr>
                 <th>Nom du chapitre</th>
+                <th>Description du chapitre</th>
                 <th>Ajouter ou supprimer</th>
             </tr>
             <tr>
                 <td><input class="form-control" type="text" name="nomchapitre[]" required=""></td>
+                <td><input class="form-control" type="text" name="description[]" required=""></td>
                 <td><input class="btn btn-warning" type="button" name="adddd" id="adddd" value="Ajouter"></td>
             </tr>
         </table>
@@ -54,11 +56,12 @@
 </select>
 
 <table class="table table-bordered">
+    <thead>
     <tr>
-        <td>ID Matiere</td>
-        <th>Nom de la matiere</th>     
+        <th>Nom de la matiere</th>    
         <td colspan = 2>Action</td>
     </tr>
+    </thead>
     <tbody id="tbody">
     {{-- @if (count($matieres) > 0 )
         @foreach ($matieres as $matiere)
@@ -105,7 +108,7 @@
         });
 
 
-        let html = '<tr><td><input class="form-control" type="text" name="nomchapitre[]" required=""></td><td><input class="btn btn-warning" type="button" name="remove" id="remove" value="Supprimer"></td></tr>';
+        let html = '<tr><td><input class="form-control" type="text" name="nomchapitre[]" required=""><td><input class="form-control" type="text" name="description[]" required=""></td></td><td><input class="btn btn-warning" type="button" name="remove" id="remove" value="Supprimer"></td></tr>';
 
 $("#adddd").click(function(){
             // if(x <= max){
@@ -117,7 +120,7 @@ $("#adddd").click(function(){
         $("#table_field2").on('click','#remove',function(){
             $(this).closest('tr').remove();
             // x--;
-        })
+        });
 
 
         $("#id_formation2").on('change',function(){
@@ -129,10 +132,10 @@ $("#adddd").click(function(){
                 success:function(data){
                     var matieres = data.matieres;
                     var html = '';
+                    console.log(matieres);
                     if(matieres.length > 0){
                         for(let i = 0; i<matieres.length; i++){
                             html += '<tr>\
-                                <td>'+matieres[i]['id_matiere']+'</td>\
                                 <td>'+matieres[i]['nom']+'</td>\
                                 <td><a href="/backoffice/chapitre/editchapitre/'+matieres[i]["id_matiere"]+'" class="btn btn-primary">Edit</a></td>\
                                 </tr>';

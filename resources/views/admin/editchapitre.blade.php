@@ -13,6 +13,7 @@
         <table class="table table-bordered" id="table_field1">
             <tr>
                 <th>Nom du Chapitre</th>
+                <th>Description du Chapitre</th>
                 <th>Ajouter ou supprimer</th>
             </tr>
             @foreach ( $chapitres as $chapitre )
@@ -23,7 +24,9 @@
                     <input type="hidden" name="id_chapitre[]" value="{{ $chapitre->id_chapitre }}"><!-- champ hidden pour recup les id matiere -->
                     <input class="form-control" type="text" name="nomchapitre[]" value="{{ $chapitre->nom }}">
                 </td>
-
+                <td>
+                    <input class="form-control" type="text" name="description[]" value="{{ $chapitre->description }}">
+                </td>
                 <td>
                   
                     @if ($loop->first)
@@ -45,7 +48,7 @@
 
 <script>
 
-let html = '<tr><td><input class="form-control" type="text" name="nomchapitre[]" required=""></td></select></td><td><input class="btn btn-warning" type="button" name="remove" id="remove" value="Supprimer"></td></tr>';
+let html = '<tr><td><input class="form-control" type="text" name="nomchapitre[]" required=""></td><td><input class="form-control" type="text" name="description[]" required=""></td></select></td><td><input class="btn btn-warning" type="button" name="remove" id="remove" value="Supprimer"></td></tr>';
    
 // Maximun de input ajoutable !
 // var max = 5;
