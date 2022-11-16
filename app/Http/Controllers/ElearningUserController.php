@@ -30,7 +30,8 @@ class ElearningUserController extends Controller
         $matieres = Matiere::all();
         $formations = Formation::all();
         $chapitres = Chapitre::all(); 
-        $files= Files::all();       
+        $files= Files::all();  
+             
        
         
         return view('pages.cours',compact('matieres','formations','chapitres','files'));
@@ -70,31 +71,45 @@ class ElearningUserController extends Controller
     }
     // public function getChapitre(){
 
-    //     $chapitres = Chapitre::with('files')->get()->pluck('files.id' ,'files.name');
+    //     $chapitres = DB::table('chapitre')
+    //     ->join('files','chapitre.id_chapitre' , '=' ,'files.id_chapitre')
+    //     ->join('matiere','chapitre.id_chapitre','=','matiere.id_chapitre')
+    //     ->select('chapitre.id_chapitre','chapitre.nom','chapitre.description','files.id','files.name','files.file','SUBSTRING_INDEX(file,'.',-1)' ,'matiere.id_matiere','chapitre.id_matiere'); 
     //     return json_encode($chapitres);
 
     // }
 
     public function filterChapitre(Request $request){
 
-        $query =DB::table('chapitre')
+        
+        $query=DB::table('chapitre')
         ->join('files','chapitre.id_chapitre' , '=' ,'files.id_chapitre')
-        ->join('matiere','chapitre.id_chapitre','=','matiere.id_chapitre')
-        ->select('chapitre.id_chapitre','chapitre.nom','chapitre.description','files.id','files.name','files.file','SUBSTRING_INDEX(file,'.',-1)' ,'matiere.id_matiere','chapitre.id_matiere');
-        // $query=Chapitre::query();
+        // ->join('matiere','chapitre.id_matiere', '=' , 'matiere.id_matiere')
+        ->select('chapitre.id_chapitre','chapitre.nom','chapitre.description',DB::raw('group_concat(files.id) as IdFiles'),DB::raw('group_concat(files.name) as NameFiles'),DB::raw('group_concat(files.file) as FileFiles'),'chapitre.id_matiere')
+        ->groupBy('chapitre.id_chapitre','chapitre.nom','chapitre.description','chapitre.id_matiere');
+        
         $matieres = Matiere::all();
+       
+        // $query=Chapitre::query();
+       
 
         if($request->ajax()){
             if(empty($request->matiere)){
                 $chapitres = $query->get();
+    
             }
             else{
             $chapitres= $query->where(['id_matiere'=>$request->matiere])->get();
+           
             }
             return response()->json(['chapitre'=>$chapitres]);
         }
+        
         $chapitres= $query->get();
         
+       
+        
+
         return view('pages.cours',compact('matieres','chapitres'));
     }
 

@@ -3,9 +3,9 @@
 @section('content')
 
 
-   {{-- @php
-       dd($query);
-   @endphp --}}
+
+
+   
     <h1 class="text-center">Cours</h1>
     <div class="text-center">
         <select name="id_formation" >
@@ -23,6 +23,7 @@
         <div class="col-2 bg-danger" id="listChapter"></div>
         <div class="col-1" ></div>
         <div class="col-9 bg-warning" id="CardChapter">
+            <h4>Veuillez Selectionner la formation Puis la Matiere que vous souhaitez pour avoir access aux chapitres de la Matiere</h4>
             {{-- <div class="card">
                 <div class="card-body">
                   <h5 class="card-title">Card title</h5>
@@ -53,7 +54,6 @@
     {
         jQuery('select[name="id_formation"]').on('change',function(){
             var formationID = jQuery(this).val();
-            console.log(formationID);
             
             if(formationID)
             {
@@ -63,7 +63,6 @@
                     dataType : "json",
                     success:function(data)
                     {
-                        
                         jQuery('select[name="id_matiere"]').empty();
                         jQuery.each(data, function(key,value){
                             $('select[name="id_matiere"]').append('<option value="'+ key +'">'+ value +'</option>');
@@ -79,21 +78,21 @@
     
         $("#id_matiere").on('change',function(){
             var matiere = $(this).val();
-            console.log(matiere);
+           
             $.ajax({
                 url : '/cours/filterChapitre',
                 type:"GET",
                 data:{'matiere':matiere},
                 success:function(data){
+                    console.log(data);
                     var chapitres = data.chapitre;
                     var html = '';
-                    console.log(chapitres);
+                    
                     if(chapitres.length > 0){
                         for(let i = 0; i<chapitres.length; i++){
                             html += '<ul>\
                                 <li>'+chapitres[i]['nom']+'</li>\
                                 </ul>';
-                            console.log(chapitres[i]['id_chapitre']);
                         }
                     }
                     else{
@@ -102,7 +101,7 @@
                             </tr>';
                     }
                     $("#listChapter").html(html);
-                    console.log(data);
+                    
                 }
             })
         });
@@ -116,28 +115,40 @@
                 success:function(data){
                     var chapitres = data.chapitre;
                     var html = '';
-                    console.log(chapitres);
+                
+                
+                    console.log(data);
                     if(chapitres.length > 0){
                         for(let i = 0; i<chapitres.length; i++){
+                            const IdFilesSplit = chapitres[i]['IdFiles'].split(",");
+                            const FileFilesSplit = chapitres[i]['FileFiles'].split(",");
+                            const NameFilesSplit = chapitres[i]['NameFiles'].split(",");
+                            console.log(IdFilesSplit);
+                            console.log(NameFilesSplit);
+                           
                             html += '<div class="card">\
                 <div class="card-body">\
                   <h5 class="card-title">'+chapitres[i]['nom']+'</h5>\
-                  <p class="card-text">'+chapitres[i]['description']+'</p>\
-                    <div class="row">\
+                  <p class="card-text">'+chapitres[i]['description']+'</p>'
+                  for(let j = 0; j<IdFilesSplit.length;j++){
+                    '<div class="row">\
                         <div class="col-3"></div>\
-                        <div class="col-4 bg-danger"><span>Telecharger le PDF: </span><a href="#" class="card-link">PDF link</a></div>\
+                        <div class="col-4 bg-danger">\
+                            <input type="hidden" name="id" value="'+IdFilesSplit[j]+'">\
+                            <span>Telecharger le PDF '+NameFilesSplit[j]+': </span><a href="#" class="card-link">PDF link</a></div>\
                         <div class="col-1"></div>\
                         <div class="col-4 bg-warning"><span>Visualiser le PDF: </span><a href="#" class="card-link">Visualiser</a></div>\
                     </div>\
                     <div class="row">\
                         <div class="col-3"></div>\
+                        <input type="hidden" name="id" value="">\
                         <div class="col-4 bg-warning"><span>Telecharger la Video: </span><a href="#" class="card-link">Video link</a></div>\
                         <div class="col-1"></div>\
                         <div class="col-4 bg-danger"><span>Visualisé la Vidéo: </span><a href="#" class="card-link">Video link</a></div>\
-                    </div>\
-                </div>\
+                    </div>'
+                }
+                '</div>\
               </div> ';
-                            console.log(chapitres[i]['id_chapitre']);
                         }
                     }
                     else{
@@ -146,7 +157,8 @@
                             </tr>';
                     }
                     $("#CardChapter").html(html);
-                    console.log(data);
+                    
+                   
                 }
             })
         });
