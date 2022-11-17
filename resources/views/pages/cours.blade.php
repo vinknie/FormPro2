@@ -115,40 +115,37 @@
                 success:function(data){
                     var chapitres = data.chapitre;
                     var html = '';
-                
-                
                     console.log(data);
                     if(chapitres.length > 0){
                         for(let i = 0; i<chapitres.length; i++){
                             const IdFilesSplit = chapitres[i]['IdFiles'].split(",");
                             const FileFilesSplit = chapitres[i]['FileFiles'].split(",");
                             const NameFilesSplit = chapitres[i]['NameFiles'].split(",");
+
+                            const StrTbl = FileFilesSplit.indexOf('pdf');
+                            
+                            
+                            console.log(StrTbl);
                             console.log(IdFilesSplit);
                             console.log(NameFilesSplit);
-                           
+                            console.log(FileFilesSplit);
+                            
                             html += '<div class="card">\
-                <div class="card-body">\
-                  <h5 class="card-title">'+chapitres[i]['nom']+'</h5>\
-                  <p class="card-text">'+chapitres[i]['description']+'</p>'
-                  for(let j = 0; j<IdFilesSplit.length;j++){
-                    '<div class="row">\
-                        <div class="col-3"></div>\
-                        <div class="col-4 bg-danger">\
-                            <input type="hidden" name="id" value="'+IdFilesSplit[j]+'">\
-                            <span>Telecharger le PDF '+NameFilesSplit[j]+': </span><a href="#" class="card-link">PDF link</a></div>\
-                        <div class="col-1"></div>\
-                        <div class="col-4 bg-warning"><span>Visualiser le PDF: </span><a href="#" class="card-link">Visualiser</a></div>\
-                    </div>\
-                    <div class="row">\
-                        <div class="col-3"></div>\
-                        <input type="hidden" name="id" value="">\
-                        <div class="col-4 bg-warning"><span>Telecharger la Video: </span><a href="#" class="card-link">Video link</a></div>\
-                        <div class="col-1"></div>\
-                        <div class="col-4 bg-danger"><span>Visualisé la Vidéo: </span><a href="#" class="card-link">Video link</a></div>\
-                    </div>'
-                }
-                '</div>\
-              </div> ';
+                                        <div class="card-body" >\
+                                            <h5 class="card-title">'+chapitres[i]['nom']+'</h5>\
+                                            <p class="card-text">'+chapitres[i]['description']+'</p>'
+                                            for(let j=0; j<IdFilesSplit.length;j++){
+                                                html +='<div class="row">\
+                                                    <div class="col-3"></div>\
+                                                    <div class="col-4 bg-danger">\
+                                                        <input type="hidden" name="id" value="'+IdFilesSplit[j]+'">\
+                                                        <span>Telecharger le PDF '+NameFilesSplit[j]+': </span><a href="#" class="card-link">PDF link</a></div>\
+                                                    <div class="col-1"></div>\
+                                                    <div class="col-4 bg-warning"><span>Visualiser le PDF: </span><a href="#" class="card-link">Visualiser</a></div>\
+                                            </div>' 
+                                            }
+                             html+=     '</div>\
+                                    </div>' ;       
                         }
                     }
                     else{
