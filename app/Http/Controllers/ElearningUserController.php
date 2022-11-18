@@ -85,7 +85,7 @@ class ElearningUserController extends Controller
         $query=DB::table('chapitre')
         ->join('files','chapitre.id_chapitre' , '=' ,'files.id_chapitre')
         // ->join('matiere','chapitre.id_matiere', '=' , 'matiere.id_matiere')
-        ->select('chapitre.id_chapitre','chapitre.nom','chapitre.description',DB::raw('group_concat(files.id) as IdFiles'),DB::raw('group_concat(files.name) as NameFiles'),DB::raw('group_concat(files.file) as FileFiles'),'chapitre.id_matiere')
+        ->select('chapitre.id_chapitre','chapitre.nom','chapitre.description',DB::raw('group_concat(files.id) as IdFiles'),DB::raw('group_concat(files.name) as NameFiles'),DB::raw('group_concat(files.file) as FileFiles'),DB::raw('group_concat(files.extension) as ExtFiles'),'chapitre.id_matiere')
         ->groupBy('chapitre.id_chapitre','chapitre.nom','chapitre.description','chapitre.id_matiere');
         
         $matieres = Matiere::all();
@@ -111,6 +111,11 @@ class ElearningUserController extends Controller
         
 
         return view('pages.cours',compact('matieres','chapitres'));
+    }
+
+    public function downloadFile($file){
+        return response()->download(public_path('assets/'.$file));
+
     }
 
     

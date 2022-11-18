@@ -4,7 +4,7 @@
 
 @include('include.navadmin')
 
-<form class="" action="{{ url('/backoffice/fichier/createFichier') }}" method="post">
+<form class="" action="{{ url('/backoffice/fichier/createFichier') }}" method="post" enctype="multipart/form-data">
     @csrf
     
     <h1 class="text-center">Ajouter un Fichier</h1>
@@ -68,6 +68,8 @@
        
     </div>
 </form>
+
+
 
 <script>
 

@@ -121,28 +121,40 @@
                             const IdFilesSplit = chapitres[i]['IdFiles'].split(",");
                             const FileFilesSplit = chapitres[i]['FileFiles'].split(",");
                             const NameFilesSplit = chapitres[i]['NameFiles'].split(",");
-
-                            const StrTbl = FileFilesSplit.indexOf('pdf');
-                            
-                            
-                            console.log(StrTbl);
-                            console.log(IdFilesSplit);
-                            console.log(NameFilesSplit);
-                            console.log(FileFilesSplit);
+                            const ExtFilesSplit = chapitres[i]['ExtFiles'].split(",");
+                           
+                            // console.log(IdFilesSplit);
+                            // console.log(NameFilesSplit);
+                            // console.log(ExtFilesSplit);
                             
                             html += '<div class="card">\
-                                        <div class="card-body" >\
-                                            <h5 class="card-title">'+chapitres[i]['nom']+'</h5>\
-                                            <p class="card-text">'+chapitres[i]['description']+'</p>'
-                                            for(let j=0; j<IdFilesSplit.length;j++){
-                                                html +='<div class="row">\
+                                <div class="card-body" >\
+                                    <h5 class="card-title">'+chapitres[i]['nom']+'</h5>\
+                                    <p class="card-text">'+chapitres[i]['description']+'</p>'
+                                    for(let j=0; j<IdFilesSplit.length;j++){
+                                                console.log(FileFilesSplit[j]);
+                                                if(ExtFilesSplit[j] == 'pdf'){
+                                                    html +='<div class="row">\
                                                     <div class="col-3"></div>\
                                                     <div class="col-4 bg-danger">\
                                                         <input type="hidden" name="id" value="'+IdFilesSplit[j]+'">\
-                                                        <span>Telecharger le PDF '+NameFilesSplit[j]+': </span><a href="#" class="card-link">PDF link</a></div>\
+                                                        <span>Telecharger le PDF '+NameFilesSplit[j]+': </span><a href="'+FileFilesSplit[j]+'" class="card-link">PDF link</a></div>\
                                                     <div class="col-1"></div>\
                                                     <div class="col-4 bg-warning"><span>Visualiser le PDF: </span><a href="#" class="card-link">Visualiser</a></div>\
-                                            </div>' 
+                                            </div>'
+                                                }else if(ExtFilesSplit[j]  == 'mp4'){
+                                                    html +='<div class="row">\
+                                                    <div class="col-3"></div>\
+                                                    <div class="col-4 bg-danger">\
+                                                        <input type="hidden" name="id" value="'+IdFilesSplit[j]+'">\
+                                                        <span>Telecharger la Video '+NameFilesSplit[j]+': </span><a href="/cours/downloadFile/'+FileFilesSplit[j]+'" class="card-link">Video link</a></div>\
+                                                    <div class="col-1"></div>\
+                                                    <div class="col-4 bg-warning"><span>Visualiser la  video: </span><a href="#" class="card-link">Visualiser</a></div>\
+                                            </div>'
+                                                }else{
+                                                    html += ''
+                                                }
+                                                
                                             }
                              html+=     '</div>\
                                     </div>' ;       

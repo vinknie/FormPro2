@@ -22,92 +22,108 @@ use App\Http\Livewire\Formations;
 
 
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\VarDumper\VarDumper;
 
 class AdminFichierController extends Controller
 {
-    public function fichierview() 
+    public function fichierview()
     {
         $matieres = Matiere::all();
         $formations = Formation::all();
-        
-        
-        
-        return view('admin.fichier',compact('matieres','formations'));
+
+
+
+        return view('admin.fichier', compact('matieres', 'formations'));
     }
 
-    public function getMatieres($id_formation){
+    public function getMatieres($id_formation)
+    {
 
-        $matieres = Matiere::where('id_formation',$id_formation)->pluck("nom","id_matiere");
+        $matieres = Matiere::where('id_formation', $id_formation)->pluck("nom", "id_matiere");
         return json_encode($matieres);
-
     }
 
-    public function filterMatiereInFile(Request $request){
+    public function filterMatiereInFile(Request $request)
+    {
 
         $query = Matiere::query();
         $formations = Formation::all();
 
-        if($request->ajax()){
-            if(empty($request->formation)){
+        if ($request->ajax()) {
+            if (empty($request->formation)) {
                 $matieres = $query->get();
+            } else {
+                $matieres = $query->where(['id_formation' => $request->formation])->get();
             }
-            else{
-            $matieres= $query->where(['id_formation'=>$request->formation])->get();
-            }
-            return response()->json(['matieres'=>$matieres]);
+            return response()->json(['matieres' => $matieres]);
         }
-        $matieres= $query->get();
-        
-        return view('admin.fichier',compact('matieres','formations'));
+        $matieres = $query->get();
 
+        return view('admin.fichier', compact('matieres', 'formations'));
     }
 
-    public function getChapitre($id_matiere){
+    public function getChapitre($id_matiere)
+    {
 
-        $chapitres = Chapitre::where('id_matiere',$id_matiere)->pluck("nom","id_chapitre");
+        $chapitres = Chapitre::where('id_matiere', $id_matiere)->pluck("nom", "id_chapitre");
         return json_encode($chapitres);
-
     }
 
-    public function filterChapitre(Request $request){
+    public function filterChapitre(Request $request)
+    {
 
         $query = Chapitre::query();
         $matieres = Matiere::all();
 
-        if($request->ajax()){
-            if(empty($request->matiere)){
+        if ($request->ajax()) {
+            if (empty($request->matiere)) {
                 $chapitres = $query->get();
+            } else {
+                $chapitres = $query->where(['id_matiere' => $request->matiere])->get();
             }
-            else{
-            $chapitres= $query->where(['id_matiere'=>$request->matiere])->get();
-            }
-            return response()->json(['chapitre'=>$chapitres]);
+            return response()->json(['chapitre' => $chapitres]);
         }
-        $chapitres= $query->get();
-        
-        return view('admin.fichier',compact('matieres','chapitres'));
+        $chapitres = $query->get();
 
+        return view('admin.fichier', compact('matieres', 'chapitres'));
     }
 
 
-    public function createFichier(Request $request){
+    public function createFichier(Request $request)
+    {
 
-       
-        $files=[];
+        // $filename=time().'.'.$request->nomfichier[$key]->getClientOriginalExtension();
 
-        foreach($request->nomfichier as $key => $value){
-            array_push($files,[
+        // $request->file->move('assets',$filename);
+
+        $files = [];
+
+        foreach ($request->nomfichier as $key => $value) {
+            $filename = $request->file[$key]->getClientOriginalName();
+            array_push($files, [
+
                 'name' => $request->nomfichier[$key],
                 'description' => $request->description[$key],
-                'file'=>$request->file[$key],
+                'file' =>  $filename[$key],
+                'extension' => pathinfo($filename)['extension'],
                 'id_formation' => $request->id_formation[$key],
                 'id_chapitre' => $request->id_chapitre[$key],
+                $request->file[$key]->move('assets', $filename),
+            
             ]);
         }
 
+        // $filestoinsert = array_pop($files);
+
+        echo '<pre>';
+        var_dump($files);
+        echo '</pre>';
+
+        die();
+
+
         Files::insert($files);
+        return redirect()->back();
+    }
 
-        return redirect()->back();      
-
-      }
 }
