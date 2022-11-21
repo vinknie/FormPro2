@@ -104,22 +104,22 @@ class AdminFichierController extends Controller
 
                 'name' => $request->nomfichier[$key],
                 'description' => $request->description[$key],
-                'file' =>  $filename[$key],
+                'file' =>  $filename,
                 'extension' => pathinfo($filename)['extension'],
                 'id_formation' => $request->id_formation[$key],
                 'id_chapitre' => $request->id_chapitre[$key],
-                $request->file[$key]->move('assets', $filename),
+                
             
             ]);
+            if($filename){
+                $request->file[$key]->move('assets',$filename);
+            }
         }
 
+        // var_dump($filename);
+        // die();
         // $filestoinsert = array_pop($files);
 
-        echo '<pre>';
-        var_dump($files);
-        echo '</pre>';
-
-        die();
 
 
         Files::insert($files);

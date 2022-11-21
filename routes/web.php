@@ -32,11 +32,11 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
 
     /* Route Elearning */
     Route::get('/elearning','Pagescontroller@elearning')->name('pages.elearning');
-    Route::get('/cours','Pagescontroller@cours')->name('pages.cours');
-    /* Route de telechargement fichier */
-    Route::get('/download/{file}','PagesController@download')->name('download');
-    /* Route de vue du fichier */
-    Route::get('/view/{id}','PagesController@view')->name('pages.viewfile');
+    // Route::get('/cours','Pagescontroller@cours')->name('pages.cours');
+    // /* Route de telechargement fichier */
+    // Route::get('/download/{file}','PagesController@download')->name('download');
+    // /* Route de vue du fichier */
+    // Route::get('/view/{id}','PagesController@view')->name('pages.viewfile');
 
     Route::get('/video','Pagescontroller@video')->name('pages.video');
     Route::get('/live','Pagescontroller@live')->name('pages.live');
@@ -148,9 +148,12 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
 
     Route::get('/cours/getChapitre/{id_matiere}','ElearningUserController@getChapitre');
 
+    Route::get('/cours/filterChapitre1','ElearningUserController@filterChapitre1');
     Route::get('/cours/filterChapitre','ElearningUserController@filterChapitre');
 
     Route::get('/cours/downloadFile/{file}','ElearningUserController@downloadFile');
+
+    Route::get('/cours/view/{id}','ElearningUserController@view')->name('pages.viewfile');
 
    
     

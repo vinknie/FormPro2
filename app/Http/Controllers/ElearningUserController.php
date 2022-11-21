@@ -69,30 +69,13 @@ class ElearningUserController extends Controller
         return json_encode($chapitres);
 
     }
-    // public function getChapitre(){
-
-    //     $chapitres = DB::table('chapitre')
-    //     ->join('files','chapitre.id_chapitre' , '=' ,'files.id_chapitre')
-    //     ->join('matiere','chapitre.id_chapitre','=','matiere.id_chapitre')
-    //     ->select('chapitre.id_chapitre','chapitre.nom','chapitre.description','files.id','files.name','files.file','SUBSTRING_INDEX(file,'.',-1)' ,'matiere.id_matiere','chapitre.id_matiere'); 
-    //     return json_encode($chapitres);
-
-    // }
-
-    public function filterChapitre(Request $request){
+  
+    public function filterChapitre1(Request $request){
 
         
-        $query=DB::table('chapitre')
-        ->join('files','chapitre.id_chapitre' , '=' ,'files.id_chapitre')
-        // ->join('matiere','chapitre.id_matiere', '=' , 'matiere.id_matiere')
-        ->select('chapitre.id_chapitre','chapitre.nom','chapitre.description',DB::raw('group_concat(files.id) as IdFiles'),DB::raw('group_concat(files.name) as NameFiles'),DB::raw('group_concat(files.file) as FileFiles'),DB::raw('group_concat(files.extension) as ExtFiles'),'chapitre.id_matiere')
-        ->groupBy('chapitre.id_chapitre','chapitre.nom','chapitre.description','chapitre.id_matiere');
-        
+        $query=Chapitre::query();
         $matieres = Matiere::all();
-       
-        // $query=Chapitre::query();
-       
-
+ 
         if($request->ajax()){
             if(empty($request->matiere)){
                 $chapitres = $query->get();
@@ -113,9 +96,45 @@ class ElearningUserController extends Controller
         return view('pages.cours',compact('matieres','chapitres'));
     }
 
+    public function filterChapitre(Request $request){
+
+        
+        $query=DB::table('chapitre')
+        ->leftJoin('files','chapitre.id_chapitre' , '=' ,'files.id_chapitre')
+        ->select('chapitre.id_chapitre','chapitre.nom','chapitre.description',DB::raw('group_concat(files.id) as IdFiles'),DB::raw('group_concat(files.name) as NameFiles'),DB::raw('group_concat(files.file) as FileFiles'),DB::raw('group_concat(files.extension) as ExtFiles'),'chapitre.id_matiere')
+        ->groupBy('chapitre.id_chapitre','chapitre.nom','chapitre.description','chapitre.id_matiere');
+        
+        // $matieres = Matiere::all();
+       
+        // $query=Chapitre::query();
+       
+
+        if($request->ajax()){
+            if(!empty($request->matiere)){
+                $chapitres1= $query->where(['id_matiere'=>$request->matiere])->get();
+
+            }
+            return response()->json(['chapitre'=>$chapitres1]);
+        }
+        
+        $chapitres= $query->get();
+        
+       
+        
+
+        return view('pages.cours',compact('chapitres'));
+    }
+
     public function downloadFile($file){
         return response()->download(public_path('assets/'.$file));
 
+    }
+
+    public function view($id)
+    {
+        $data=Files::find($id);
+
+        return view('.pages.viewfile',compact('data'));
     }
 
     
