@@ -148,7 +148,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
 
     Route::get('/cours/getChapitre/{id_matiere}','ElearningUserController@getChapitre');
 
-    Route::get('/cours/filterChapitre1','ElearningUserController@filterChapitre1');
+    // Route::get('/cours/filterChapitre1','ElearningUserController@filterChapitre1');
     Route::get('/cours/filterChapitre','ElearningUserController@filterChapitre');
 
     Route::get('/cours/downloadFile/{file}','ElearningUserController@downloadFile');

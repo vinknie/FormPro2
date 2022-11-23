@@ -8,15 +8,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class UserFormation extends Authenticatable
 {
     use HasFactory;
 
-    protected $table = 'utilisateurs';
-    protected $primaryKey = 'id';
+    protected $table = 'user_formation';
+    // protected $primaryKey = 'id_formation','id_utilisateur';
 
-    protected $fillable =['prenom','nom','email','username','password','status','role','telephone','niveau','sexe','adresse','complementAdresse','codePostal','ville','pays','date_naissance'];
-
+    protected $fillable = ['id_formation','id_utilisateur'];
 
     public function posts()
     {

@@ -1,0 +1,16 @@
+->Trop de truc a faire 
+
+->User Profil + PDF
+->Quizz 
+->Presence
+->Stream 
+
+-> HASH URL GET(Id)
+-> Value input = Value in console 
+
+-> Securité 
+
+-> MDP Random + Mail 
+
+-> Responsive 
+

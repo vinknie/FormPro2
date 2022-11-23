@@ -15,10 +15,11 @@ use App\Models\User;
 use App\Models\Qcm;
 use App\Models\Formation;
 use App\Models\Matiere;
+use App\Models\UserFormation;
 
 use App\Http\Livewire\Formations;
-
-
+use App\Models\Utilisateur;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\DB;
 
 class PagesController extends Controller
@@ -28,36 +29,13 @@ class PagesController extends Controller
     {
         return view('pages.accueil');
     }
-    
-
-   
-
+  
     /* function elearning */
     public function elearning()
     {
         return view('pages.elearning');
     }
     
-
-    
-    public function download(Request $request,$file)
-    {
-        return response()->download(public_path('assets/'.$file));
-    }  
-
-    public function view($id)
-    {
-        $data=File::find($id);
-
-        return view('.pages.viewfile',compact('data'));
-    }
-
-        /* function vue et download des fichiers MP4 */
-    public function video()
-    {
-        $data=DB::select('select * from files where extension = "MP4"');
-        return view('.pages.video',compact('data'));
-    }
     public function live()
     {
         return view('pages.live');
@@ -65,9 +43,10 @@ class PagesController extends Controller
 
     /* Function Register */
     public function register()
-    {
+    {   
+         $formations=Formation::all();
        
-        return view('pages/register');
+        return view('pages/register',compact('formations'));
     }
 
     public function register_action(Request $request)
@@ -75,9 +54,14 @@ class PagesController extends Controller
         $request->validate([
             'nom' => 'required',
             'prenom' => 'required',
-            'age' => 'required',
-            'status' => 'required',
             'role' => 'required',
+            'telephone' => 'required',
+            'sexe' => 'required',
+            'adresse' => 'required',
+            'codePostal' => 'required',
+            'ville' => 'required',
+            'pays' => 'required',
+            'date_naissance' => 'required',
             'email' => 'required|unique:utilisateurs',
             'username' => 'required|unique:utilisateurs',
             'password' => ['required', 'string', 'confirmed', new isValidPassword()],
@@ -87,21 +71,38 @@ class PagesController extends Controller
         $user = new User([
             'nom' => $request->nom,
             'prenom' => $request->prenom,
-            'age' => $request->age,
+            'telephone' => $request->telephone,
+            'niveau' => $request->niveau,
+            'sexe' => $request->sexe,
+            'adresse' => $request->adresse,
+            'complementAdresse' => $request->complementAdresse,
+            'codePostal' => $request->codePostal,
+            'ville' => $request->ville,
+            'pays' => $request->pays,            
+            'date_naissance' => $request->date_naissance,
             'status' => $request->status,
             'role' => $request->role,
             'email' => $request->email,
             'username' => $request->username,
-            'password' => Hash::make($request->password),
-            
+            'password' => Hash::make($request->password), 
         ]);
         $user->save();
+        
+        if($request->id_formation){
+        $userFormation= new UserFormation([
+                'id_formation'=>$request->id_formation,
+                'id_utilisateur'=>$user->id,
+            ]); 
+            $userFormation->save();
+        }
+        
         return redirect()->route('pages.login')->with('success','Registration Success. Please Login!');
     }
 
     /* Function Login */
     public function login()
     {
+      
        
         return view('pages.login');
     }
@@ -111,10 +112,9 @@ class PagesController extends Controller
         $request->validate([
             'username' => 'required',
             'password' => 'required',
-            
-
         ]);
        if(Auth::attempt(['username'=>$request->username,'password'=>$request->password])){
+           
             $request->session()->regenerate();
             return redirect()->intended('/');
        }
@@ -135,6 +135,7 @@ class PagesController extends Controller
     /* function Profil */
     public function profil()
     {
+        
         return view('pages.profil');
     }
     /* function Profil */

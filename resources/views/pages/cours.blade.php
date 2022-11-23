@@ -72,7 +72,7 @@
                 var matiere = $(this).val();
 
                 $.ajax({
-                    url: '/cours/filterChapitre1',
+                    url: '/cours/filterChapitre',
                     type: "GET",
                     data: {
                         'matiere': matiere

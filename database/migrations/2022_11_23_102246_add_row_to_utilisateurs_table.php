@@ -13,9 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('files', function (Blueprint $table) {
-            $table->bigInteger('id_chapitre')->unsigned()->nullable();
-            $table->foreign('id_chapitre')->references('id_chapitre')->on('chapitre');
+        Schema::table('utilisateurs', function (Blueprint $table) {
+            $table->string('telephone');
+            $table->string('niveau');
+            $table->string('sexe');
+            $table->string('adresse');
+            $table->date('date_naissance');
         });
     }
 
@@ -26,7 +29,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('files', function (Blueprint $table) {
+        Schema::table('utilisateurs', function (Blueprint $table) {
             //
         });
     }

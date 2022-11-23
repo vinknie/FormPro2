@@ -13,9 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('formation', function (Blueprint $table) {
-            $table->bigInteger('id_utilisateurs')->unsigned();
-            $table->foreign('id_utilisateurs')->references('id')->on('utilisateurs');
+        Schema::table('utilisateurs', function (Blueprint $table) {
+            $table->string('complementAdresse');
+            $table->string('codePostal');
+            $table->string('ville');
+            $table->string('pays');
         });
     }
 
@@ -26,7 +28,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('formation', function (Blueprint $table) {
+        Schema::table('utilisateurs', function (Blueprint $table) {
             //
         });
     }

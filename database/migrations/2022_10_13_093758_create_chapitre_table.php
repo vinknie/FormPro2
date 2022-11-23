@@ -16,7 +16,8 @@ class CreateChapitreTable extends Migration
         Schema::create('chapitre', function (Blueprint $table) {
             $table->bigIncrements('id_chapitre');
             $table->bigInteger('id_matiere')->unsigned();
-            $table->integer('nom');
+            $table->string('nom');
+            $table->text('description');
             $table->foreign('id_matiere')->references('id_matiere')->on('matiere');
             $table->timestamps();
         });

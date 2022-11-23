@@ -26,11 +26,6 @@
       <li><a href="#contactfooter">Contact</a></li>
       @auth <!-- Si log menu apparait -->
       <li><a href="{{ route('pages.profil') }}">Mon espace Personnel</a>
-        <ul class="sous">
-            <li><a href="">Profil</a>
-            </li>
-            <li><a href="">Notes</a></li>
-        </ul>
     </li>
     @endauth
     <li><a href="{{ route('pages.satisfaction') }}">Satisfaction</a></li>  

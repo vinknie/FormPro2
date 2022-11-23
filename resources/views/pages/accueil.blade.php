@@ -22,7 +22,4 @@
 <div class="textpresentation">
     <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laborum voluptatem, cupiditate recusandae aut delectus iusto quasi voluptatibus neque corporis possimus veniam aliquam, eligendi adipisci illum repellendus odit debitis sed ut!</p>
 </div>
-
-    
-
 @endsection

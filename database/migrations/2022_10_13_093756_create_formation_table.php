@@ -17,6 +17,8 @@ class CreateFormationTable extends Migration
             $table->bigIncrements('id_formation');
             
             $table->string('nom');
+            $table->date('date_debut');
+            $table->date('date_fin');
             $table->timestamps();
 
         });

@@ -70,31 +70,31 @@ class ElearningUserController extends Controller
 
     }
   
-    public function filterChapitre1(Request $request){
+    // public function filterChapitre1(Request $request){
 
         
-        $query=Chapitre::query();
-        $matieres = Matiere::all();
+    //     $query=Chapitre::query();
+    //     $matieres = Matiere::all();
  
-        if($request->ajax()){
-            if(empty($request->matiere)){
-                $chapitres = $query->get();
+    //     if($request->ajax()){
+    //         if(empty($request->matiere)){
+    //             $chapitres = $query->get();
     
-            }
-            else{
-            $chapitres= $query->where(['id_matiere'=>$request->matiere])->get();
+    //         }
+    //         else{
+    //         $chapitres= $query->where(['id_matiere'=>$request->matiere])->get();
            
-            }
-            return response()->json(['chapitre'=>$chapitres]);
-        }
+    //         }
+    //         return response()->json(['chapitre'=>$chapitres]);
+    //     }
         
-        $chapitres= $query->get();
+    //     $chapitres= $query->get();
         
        
         
 
-        return view('pages.cours',compact('matieres','chapitres'));
-    }
+    //     return view('pages.cours',compact('matieres','chapitres'));
+    // }
 
     public function filterChapitre(Request $request){
 
