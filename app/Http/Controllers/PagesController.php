@@ -27,6 +27,8 @@ class PagesController extends Controller
     /* function Accueil */
     public function index() 
     {
+     
+
         return view('pages.accueil');
     }
   
@@ -131,12 +133,23 @@ class PagesController extends Controller
         return redirect('/');
 
     }
-
+    
     /* function Profil */
     public function profil()
     {
-        
-        return view('pages.profil');
+       $user= Auth::User();
+       if(Auth::guest()){
+        return view('pages.login');
+       }else{
+        $userFormation=DB::table('utilisateurs')
+        ->join('user_formation','utilisateurs.id', '=' , 'user_formation.id_utilisateur')
+        ->join('formation' ,'formation.id_formation', '=' , 'user_formation.id_formation')
+        ->select('utilisateurs.*' , 'formation.*','user_formation.id_utilisateur', 'user_formation.id_formation')
+        ->where('user_formation.id_utilisateur' ,'=', $user->id) 
+        ->get();
+
+        return view('pages.profil',compact('user','userFormation'));
+    }
     }
     /* function Profil */
     public function satisfaction()

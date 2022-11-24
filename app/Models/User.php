@@ -18,8 +18,8 @@ class User extends Authenticatable
     protected $fillable =['prenom','nom','email','username','password','status','role','telephone','niveau','sexe','adresse','complementAdresse','codePostal','ville','pays','date_naissance'];
 
 
-    public function posts()
-    {
-        return $this->hasMany(Post::class);
-    }
+
+    // public function formations(){
+    //     return $this->belongsToMany(Formation::class);
+    // }
 }

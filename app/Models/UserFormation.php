@@ -17,8 +17,10 @@ class UserFormation extends Authenticatable
 
     protected $fillable = ['id_formation','id_utilisateur'];
 
-    public function posts()
-    {
-        return $this->hasMany(Post::class);
-    }
+    // public function posts()
+    // {
+    //     return $this->hasMany(Post::class);
+    // }
+
+    
 }

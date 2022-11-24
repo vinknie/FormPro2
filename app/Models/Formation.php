@@ -13,4 +13,9 @@ class Formation extends Model
     protected $primaryKey = 'id_formation';
 
     protected $fillable =['nom','date_debut','date_fin'];
+
+
+    // public function users(){
+    //     return $this->belongsToMany(User::class);
+    // }
 }

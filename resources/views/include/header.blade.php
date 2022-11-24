@@ -24,9 +24,12 @@
       </li>
       
       <li><a href="#contactfooter">Contact</a></li>
-      @auth <!-- Si log menu apparait -->
-      <li><a href="{{ route('pages.profil') }}">Mon espace Personnel</a>
-    </li>
+     @auth <!-- Si log menu apparait -->
+     
+          
+      <li><a href="{{ route('pages.profil') }}">Mon espace Personnel</a></li>
+
+      
     @endauth
     <li><a href="{{ route('pages.satisfaction') }}">Satisfaction</a></li>  
       
