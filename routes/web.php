@@ -53,7 +53,12 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
     Route::get('/logout','PagesController@logout')->name('pages.logout');
 
     /* Route Profil */
-    Route::get('/profil','Pagescontroller@profil')->name('pages.profil');
+    Route::get('/profil','Pagescontroller@profil')->name('profil.profil');
+    Route::get('/profil/mespdf','Pagescontroller@pdfprofil')->name('profil.pdfprofil');
+    
+    Route::get('/pdf/{id_formation}','Pagescontroller@pdf1')->name('profil.pdf');
+
+    // Route::get('pdf','Pagescontroller@pdf')->name('pdf');
 
     /* Route Satisafaction */
     Route::get('/satisfaction','Pagescontroller@satisfaction')->name('pages.satisfaction');

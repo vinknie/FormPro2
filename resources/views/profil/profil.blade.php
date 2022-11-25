@@ -25,16 +25,11 @@
             </div>
             <div class="row mt-3">
                 <h3>Mes Formations</h3>
-              
                 @foreach ($userFormation as $userformation1)
-                @php
-                var_dump($userformation1)
-                @endphp
                     <div class="col-md-4"><label class="labels">Formation</label><input type="text" class="form-control" value="{{ $userformation1->FormNom }}" disabled="disabled"></div>
                     <div class="col-md-4"><label class="labels">Date de Début</label><input type="text" class="form-control" value="{{ $userformation1->date_debut }}" disabled="disabled"></div>
                     <div class="col-md-4"><label class="labels">Date de Fin</label><input type="text" class="form-control" value="{{ $userformation1->date_fin }}" disabled="disabled"></div>
                 @endforeach
-      
             </div>
         </div>
     </div>
@@ -44,7 +39,9 @@
 </div>
 </div>
 </div>
-
+{{-- @php
+    dd($userFormation);
+@endphp --}}
 @endauth
 
 

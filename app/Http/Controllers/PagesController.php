@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\PDF;
 
 use App\Rules\IsValidPassword;
 
@@ -144,14 +145,71 @@ class PagesController extends Controller
         $userFormation=DB::table('utilisateurs')
         ->join('user_formation','utilisateurs.id', '=' , 'user_formation.id_utilisateur')
         ->join('formation' ,'formation.id_formation', '=' , 'user_formation.id_formation')
-        ->select('utilisateurs.*' , 'formation.*','user_formation.id_utilisateur', 'user_formation.id_formation')
+        ->select('utilisateurs.id','utilisateurs.prenom','utilisateurs.nom','utilisateurs.email','utilisateurs.username','utilisateurs.status','utilisateurs.role','utilisateurs.telephone','utilisateurs.niveau','utilisateurs.sexe','utilisateurs.adresse','utilisateurs.date_naissance','utilisateurs.complementAdresse','utilisateurs.codePostal','utilisateurs.ville','utilisateurs.pays' , 'formation.nom AS FormNom','formation.date_debut','formation.date_fin','user_formation.id_utilisateur', 'user_formation.id_formation')
         ->where('user_formation.id_utilisateur' ,'=', $user->id) 
         ->get();
 
-        return view('pages.profil',compact('user','userFormation'));
+        return view('profil.profil',compact('user','userFormation'));
     }
     }
-    /* function Profil */
+
+    public function pdfprofil(){
+        // $getformation= Formation::find($id_formation);
+
+        $user= Auth::User();
+       if(Auth::guest()){
+        return view('pages.login');
+       }else{
+        $userFormation1=DB::table('utilisateurs')
+        ->join('user_formation','utilisateurs.id', '=' , 'user_formation.id_utilisateur')
+        ->join('formation' ,'formation.id_formation', '=' , 'user_formation.id_formation')
+        ->select('utilisateurs.id','utilisateurs.prenom','utilisateurs.nom', 'formation.nom AS FormNom','formation.date_debut','formation.date_fin','user_formation.id_utilisateur', 'user_formation.id_formation')
+        ->where('user_formation.id_utilisateur' ,'=', $user->id) 
+        ->get();
+
+        return view('profil.pdfprofil',compact('user','userFormation1'));
+    }
+    }
+    // /*function PDF Prolil */
+    // public function pdf(){
+    //     $user= Auth::User();
+
+    //     $userFormation=DB::table('utilisateurs')
+    //     ->join('user_formation','utilisateurs.id', '=' , 'user_formation.id_utilisateur')
+    //     ->join('formation' ,'formation.id_formation', '=' , 'user_formation.id_formation')
+    //     ->select('utilisateurs.id','utilisateurs.prenom','utilisateurs.nom', 'formation.nom AS FormNom','formation.date_debut','formation.date_fin','user_formation.id_utilisateur', 'user_formation.id_formation')
+    //     ->where('user_formation.id_utilisateur' ,'=', $user->id) 
+    //     ->get();
+        
+    //     $pdf = PDF::loadView('',$user);
+        
+    //     return $pdf->download('Attestion'.$userFormation->FormNom . '_' .  $user->nom . '_' . $user->prenom . '.pdf');
+    // }
+
+    public function pdf1($id_formation)
+    {
+        $getformation=Formation::find($id_formation);
+        $user= Auth::User();
+
+        $userFormation=DB::table('utilisateurs')
+        ->join('user_formation','utilisateurs.id', '=' , 'user_formation.id_utilisateur')
+        ->join('formation' ,'formation.id_formation', '=' , 'user_formation.id_formation')
+        ->select('utilisateurs.id','utilisateurs.prenom','utilisateurs.nom', 'formation.nom AS FormNom','formation.date_debut','formation.date_fin','user_formation.id_utilisateur', 'user_formation.id_formation')
+        ->where('user_formation.id_utilisateur' ,'=', $user->id) 
+        ->where('user_formation.id_formation','=', $getformation->id_formation)
+        ->get();
+    
+        $pdf = PDF::loadView('profil.pdf', compact('userFormation'))->output();
+        return response()->streamDownload(
+            fn ()=> print($pdf),
+            "Attestion_".$userFormation[0]->FormNom."_"."$user->nom"."_"."$user->prenom".".pdf"
+        );
+    //    return view('profil.pdf',compact('userFormation'));
+        // return $pdf->download('Attestion_' .  $user->nom . '_' . $user->prenom . '.pdf');
+    }
+
+
+
     public function satisfaction()
     {
         return view('pages.satisfaction');

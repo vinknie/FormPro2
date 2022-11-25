@@ -26,7 +26,7 @@
             <div class="mb-3">
                 <label>Date de naissance<span class="text-danger">*</span></label>
                 <input class="form-control" type="date" id="end" name="date_naissance"
-                value="2022-07-24" min="2022-01-01" max="2060-12-31" />
+                value="2022-07-24" min="1950-01-01" max="2060-12-31" />
             </div>
             <div class="mb-3">
                 <label>Adresse<span class="text-danger">*</span></label>

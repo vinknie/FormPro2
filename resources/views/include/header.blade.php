@@ -1,7 +1,7 @@
 <header id="comebacktop">
   <nav>
   <div class="menu-icon">
-      <i class="fa fa-bars fa-2x"></i>
+      {{-- <i class="fa fa-bars fa-2x"></i> --}}
   </div>
   <div class="nameSite">
       FormPro
@@ -27,8 +27,13 @@
      @auth <!-- Si log menu apparait -->
      
           
-      <li><a href="{{ route('pages.profil') }}">Mon espace Personnel</a></li>
-
+    <li><a href="{{ route('profil.profil') }}">Mon espace Personnel</a>
+        <ul class="sous">
+            <li><a href="{{ route('profil.profil') }}">Mon Profil</a></li>
+            <li><a href="{{ route('profil.pdfprofil') }}">Mes PDFs</a></li>
+            <li><a href="">Mes Notes</a></li>
+        </ul>
+    </li>
       
     @endauth
     <li><a href="{{ route('pages.satisfaction') }}">Satisfaction</a></li>  
