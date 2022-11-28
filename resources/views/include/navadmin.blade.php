@@ -11,6 +11,12 @@
         <li class="nav-item">
           <a class="nav-link" href="{{ route('admin.fichier') }}">Fichier</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('admin.userApprenant') }}">Apprenant</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('admin.userFormateur') }}">Formateur</a>
+        </li>
       </ul>
     </div>
   </nav>

@@ -146,20 +146,24 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
 
     /* Route Elearnling User */
     Route::get('/cours','ElearningUserController@cours')->name('pages.cours');
-
     Route::get('/cours/getMatieres/{id_formation}','ElearningUserController@getMatieres');
-
     Route::get('/cours/filterMatiere','ElearningUserController@filterMatiere');
-
     Route::get('/cours/getChapitre/{id_matiere}','ElearningUserController@getChapitre');
 
     // Route::get('/cours/filterChapitre1','ElearningUserController@filterChapitre1');
     Route::get('/cours/filterChapitre','ElearningUserController@filterChapitre');
-
     Route::get('/cours/downloadFile/{file}','ElearningUserController@downloadFile');
-
     Route::get('/cours/view/{id}','ElearningUserController@view')->name('pages.viewfile');
 
+    // Route userApprenant Admin 
+
+    Route::get('/backoffice/userApprenant','AdminApprenantController@index')->name('admin.userApprenant');
+    Route::get('/backoffice/userApprenant/advance', 'AdminApprenantController@advance')->name('advance_search');
+    
+    // Route userFormateur Admin
+
+    Route::get('/backoffice/userFormateur','AdminFormateurController@index')->name('admin.userFormateur');
+    Route::get('/backoffice/userFormateur/advance', 'AdminFormateurController@advance')->name('advance_searchForm');
    
     
     
