@@ -2,7 +2,7 @@
 
 @section('content')
 
-
+@include('include.navadmin')
 <h1>Editer la formation</h1>
 
 <form class="" action="{{ route('admin.update' ,$getformation->id_formation)}}" method="post" enctype="multipart/form-data">

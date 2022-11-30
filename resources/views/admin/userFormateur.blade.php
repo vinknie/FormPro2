@@ -19,9 +19,6 @@
     <input type="submit" value="Search" class="btn btn-success">
     </form>
 </div>
-@php
-    dd($data);
-@endphp
 <div class="col-md-12">
     <h1>Liste des Formateurs</h1>
     <table class="table table-striped">
@@ -51,12 +48,16 @@
     @endforeach
     </table>
     </div>
+    {{-- @php
+        dd($data);
+    @endphp --}}
 
 @php
     function test($string)
     {
         if (str_contains($string, ',')) {
             $string = explode(',', $string);
+            $string = array_unique($string);
             $string = implode(' <hr>', $string);
         }
         return $string;

@@ -158,12 +158,19 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
     // Route userApprenant Admin 
 
     Route::get('/backoffice/userApprenant','AdminApprenantController@index')->name('admin.userApprenant');
-    Route::get('/backoffice/userApprenant/advance', 'AdminApprenantController@advance')->name('advance_search');
+    Route::get('/backoffice/userApprenant/advance/', 'AdminApprenantController@advance')->name('advance_search');
+
+    Route::get('/backoffice/userApprenant/edit/{id}', 'AdminApprenantController@editApprenant')->name('admin.editApprenant');
+    Route::post('backoffice/userApprenant/update/{id}', 'AdminApprenantController@updateApprenant')->name('admin.updateApprenant');
+    Route::delete('backoffice/userApprenant/delete/{id}', 'AdminApprenantController@deleteApprenant')->name('admin.deleteApprenant');
+    Route::get('backoffice/userApprenant/edit/delete/{id_formation}/{id_utilisateur}', 'AdminApprenantController@deleteUserFormation')->name('admin.deleteUserFormation');
+
     
     // Route userFormateur Admin
 
     Route::get('/backoffice/userFormateur','AdminFormateurController@index')->name('admin.userFormateur');
     Route::get('/backoffice/userFormateur/advance', 'AdminFormateurController@advance')->name('advance_searchForm');
+    
    
     
     

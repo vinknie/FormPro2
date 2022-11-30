@@ -170,22 +170,7 @@ class PagesController extends Controller
         return view('profil.pdfprofil',compact('user','userFormation1'));
     }
     }
-    // /*function PDF Prolil */
-    // public function pdf(){
-    //     $user= Auth::User();
-
-    //     $userFormation=DB::table('utilisateurs')
-    //     ->join('user_formation','utilisateurs.id', '=' , 'user_formation.id_utilisateur')
-    //     ->join('formation' ,'formation.id_formation', '=' , 'user_formation.id_formation')
-    //     ->select('utilisateurs.id','utilisateurs.prenom','utilisateurs.nom', 'formation.nom AS FormNom','formation.date_debut','formation.date_fin','user_formation.id_utilisateur', 'user_formation.id_formation')
-    //     ->where('user_formation.id_utilisateur' ,'=', $user->id) 
-    //     ->get();
-        
-    //     $pdf = PDF::loadView('',$user);
-        
-    //     return $pdf->download('Attestion'.$userFormation->FormNom . '_' .  $user->nom . '_' . $user->prenom . '.pdf');
-    // }
-
+  
     public function pdf1($id_formation)
     {
         $getformation=Formation::find($id_formation);

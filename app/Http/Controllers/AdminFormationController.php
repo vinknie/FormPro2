@@ -79,7 +79,6 @@ class AdminFormationController extends Controller
         $getmatieres=DB::select('select id_matiere, nom, id_utilisateurs from matiere where id_formation = '.$id_formation);
     
         
-        
         $selectformateur=$this->formationSelectFormateur();
         return view('admin.editformation' , compact('getformation','getmatieres','selectformateur'));
         

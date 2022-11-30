@@ -29,14 +29,14 @@ html, body {
     letter-spacing: 2px;
 }
 
-nav {
+#navaccueil {
     position: fixed;
     width: 100%;
     line-height: 60px;
     z-index: 1000;
 }
 
-nav ul {
+#navaccueil ul {
     line-height: 60px;
     list-style: none;
     background: rgba(0, 0, 0, 0);
@@ -49,16 +49,16 @@ nav ul {
     transition: 1s;
 }
 
-nav.black ul {
+#navaccueil.black ul {
     background: #000;
 }
 
-nav ul li {
+#navaccueil ul li {
     display: inline-block;
     padding: 16px 40px;
 }
 
-nav ul li a {
+#navaccueil ul li a {
     text-decoration: none;
     color: #fff;
     font-size: 16px;
