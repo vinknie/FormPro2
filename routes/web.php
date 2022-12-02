@@ -159,18 +159,22 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
 
     Route::get('/backoffice/userApprenant','AdminApprenantController@index')->name('admin.userApprenant');
     Route::get('/backoffice/userApprenant/advance/', 'AdminApprenantController@advance')->name('advance_search');
-
     Route::get('/backoffice/userApprenant/edit/{id}', 'AdminApprenantController@editApprenant')->name('admin.editApprenant');
     Route::post('backoffice/userApprenant/update/{id}', 'AdminApprenantController@updateApprenant')->name('admin.updateApprenant');
-    Route::delete('backoffice/userApprenant/delete/{id}', 'AdminApprenantController@deleteApprenant')->name('admin.deleteApprenant');
+    Route::get('backoffice/userApprenant/delete/{id}', 'AdminApprenantController@deleteApprenant')->name('admin.deleteApprenant');
     Route::get('backoffice/userApprenant/edit/delete/{id_formation}/{id_utilisateur}', 'AdminApprenantController@deleteUserFormation')->name('admin.deleteUserFormation');
 
     
     // Route userFormateur Admin
 
     Route::get('/backoffice/userFormateur','AdminFormateurController@index')->name('admin.userFormateur');
-    Route::get('/backoffice/userFormateur/advance', 'AdminFormateurController@advance')->name('advance_searchForm');
-    
+    Route::get('/backoffice/userFormateur/advance/', 'AdminFormateurController@advance')->name('advance_searchForm');
+    Route::get('/backoffice/userFormateur/edit/{id}', 'AdminFormateurController@editFormateur')->name('admin.editFormateur');
+    Route::post('backoffice/userFormateur/updateFormateur/{id}', 'AdminFormateurController@updateFormateur')->name('admin.updateFormateur');
+    Route::get('backoffice/userFormateur/edit/deleteMat/{id_utilisateurs}/{id_matiere}', 'AdminFormateurController@deleteMatiereFormateur')->name('admin.deleteMatiereFormateur');
+    Route::get('backoffice/userFormateur/delete/{id}', 'AdminFormateurController@deleteFormateur')->name('admin.deleteFormateur');
+    Route::post('backoffice/userFormateur/edit/addMat/{id}', 'AdminFormateurController@addMatiere')->name('admin.addMatiereFormateur');
+    Route::get('/backoffice/userFormateur/edit/getMatieres/{id_formation}','AdminFormateurController@getMatieres')->name('getMatieresFormateur');
    
     
     

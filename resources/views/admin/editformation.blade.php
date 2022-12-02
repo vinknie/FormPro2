@@ -36,6 +36,7 @@
                     </td>
                     <td>
                         <select class="form-control" name="id_formateur[]" >
+                            <option value="">choisi formateur plus tard</option>
                             @foreach ($selectformateur as $formateur)
                                 
                                 @if(!empty($getmatiere->id_utilisateurs) && $getmatiere->id_utilisateurs == $formateur->id)
@@ -43,6 +44,7 @@
                                 @else
                                 <option value="{{ $formateur->id }}" > {{ $formateur->nom_complet }} </option>
                                 @endif
+                                
                             @endforeach
                         </select>
                     </td>
@@ -70,7 +72,7 @@
 <script>
         
 
-    let html = '<tr><td><input class="form-control" type="text" name="nommatiere[]" required=""></td><td><select class="form-control" name="id_formateur[]" >@foreach ($selectformateur as $formateur)<option value="{{ $formateur->id }}"> {{ $formateur->nom_complet }} </option>@endforeach</select></td><td><input class="btn btn-warning" type="button" name="remove" id="remove" value="Supprimer"></td></tr>';
+    let html = '<tr><td><input class="form-control" type="text" name="nommatiere[]" required=""></td><td><select class="form-control" name="id_formateur[]" ><option value="">choisi formateur plus tard</option>@foreach ($selectformateur as $formateur)<option value="{{ $formateur->id }}"> {{ $formateur->nom_complet }} </option>@endforeach</select></td><td><input class="btn btn-warning" type="button" name="remove" id="remove" value="Supprimer"></td></tr>';
    
     // Maximun de input ajoutable !
     // var max = 5;

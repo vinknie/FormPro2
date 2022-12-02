@@ -51,11 +51,11 @@
                         <a href="{{ route('admin.editApprenant', $pep->id) }}" class="btn btn-primary">Edit</a>
                     </td>
                     <td>
-                        <form action="" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-danger" value="Delete" type="submit">Delete</button>
-                        </form>
+                        <div class="col-md-2">
+                            
+                            <a href="{{ URL::to('backoffice/userApprenant/delete/' . $pep->id) }}" class="btn btn-danger" onclick="return confirm('Etes vous sur de vouloir Supprimé!?')" data-method="delete"><i class="fa fa-times"></i>
+                            </a>
+                        </div>
                     </td>
                 </tr>
             @endforeach

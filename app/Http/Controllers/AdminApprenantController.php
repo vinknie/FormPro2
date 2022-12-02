@@ -133,5 +133,11 @@ class AdminApprenantController extends Controller
 
         return redirect()->back();
     }
+
+    public function deleteApprenant($id)
+    {
+        $delete = User::where('id',$id)->delete();
+        return redirect()->back();
+    }
     
 }
