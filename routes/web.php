@@ -176,6 +176,13 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
     Route::post('backoffice/userFormateur/edit/addMat/{id}', 'AdminFormateurController@addMatiere')->name('admin.addMatiereFormateur');
     Route::get('/backoffice/userFormateur/edit/getMatieres/{id_formation}','AdminFormateurController@getMatieres')->name('getMatieresFormateur');
    
+    // Route QCM Admin
+
+    Route::get('/backoffice/qcm','AdminQcmController@index')->name('admin.qcm');
+    Route::get('/backoffice/qcm/getMatieres/{id_formation}','AdminQcmController@getMatieres');
+    Route::get('/backoffice/qcm/filterMatiere','AdminQcmController@filterMatiereInQCM')->name('filterMatiereInQCM');
+    Route::get('/backoffice/qcm/getChapitre/{id_matiere}','AdminQcmController@getChapitre');
+    Route::get('/backoffice/qcm/filterChapitre','AdminQcmController@filterChapitre')->name('filterChapitreInQCM');
     
     
 

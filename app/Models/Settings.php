@@ -5,16 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Qcm extends Model
+class Settings extends Model
 {
     use HasFactory;
 
-    protected $table = 'qcm';
-    protected $primaryKey = 'id_qcm';
+    protected $table = 'settings';
+    protected $primaryKey = 'id_settings';
 
-    protected $fillable =['id_chapitre','titre'];
-
-
-   
-
+    protected $fillable =['id_qcm','temps'];
 }

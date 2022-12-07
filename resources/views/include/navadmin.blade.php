@@ -17,6 +17,9 @@
         <li class="nav-item">
           <a class="nav-link" href="{{ route('admin.userFormateur') }}">Formateur</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('admin.qcm') }}">Qcm</a>
+        </li>
       </ul>
     </div>
   </nav>

@@ -81,7 +81,7 @@
             if(formationID)
             {
                 jQuery.ajax({
-                    url : '/cours/getMatieres/' +formationID,
+                    url : '/backoffice/fichier/getMatieres/' +formationID,
                     type : "GET",
                     dataType : "json",
                     success:function(data)
