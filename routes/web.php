@@ -178,12 +178,21 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
    
     // Route QCM Admin
 
-    Route::get('/backoffice/qcm','AdminQcmController@index')->name('admin.qcm');
+    Route::get('/backoffice/qcm','AdminQcmController@index')->name('admin.QCM.createQcm');
     Route::get('/backoffice/qcm/getMatieres/{id_formation}','AdminQcmController@getMatieres');
     Route::get('/backoffice/qcm/filterMatiere','AdminQcmController@filterMatiereInQCM')->name('filterMatiereInQCM');
     Route::get('/backoffice/qcm/getChapitre/{id_matiere}','AdminQcmController@getChapitre');
     Route::get('/backoffice/qcm/filterChapitre','AdminQcmController@filterChapitre')->name('filterChapitreInQCM');
+    Route::post('/backoffice/qcm/createQcm','AdminQcmController@createQcm');
     
+    Route::get('/backoffice/qcm/question','AdminQcmController@index2')->name('admin.QCM.createQuestion');
+    Route::get('/backoffice/qcm/question/getMatieres/{id_formation}','AdminQcmController@getMatieres');
+    Route::get('/backoffice/qcm/question/filterMatiere','AdminQcmController@filterMatiereInQCM')->name('filterMatiereInQuestion');
+    Route::get('/backoffice/qcm/question/getChapitre/{id_matiere}','AdminQcmController@getChapitre');
+    Route::get('/backoffice/qcm/question/filterChapitre','AdminQcmController@filterChapitre')->name('filterChapitreInQuestion');
+    Route::get('/backoffice/qcm/question/getQcm/{id_chapitre}','AdminQcmController@getQcm');
+    Route::get('/backoffice/qcm/question/filterQcm','AdminQcmController@filterQcm')->name('filterQcm');
+    Route::post('/backoffice/qcm/question/createQuestion','AdminQcmController@createQuestion');
     
 
 

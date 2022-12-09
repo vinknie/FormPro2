@@ -1,6 +1,7 @@
-->Trop de truc a faire 
 
-->User Profil + PDF
+
+
+
 ->Quizz 
 ->Presence
 ->Stream 
@@ -12,5 +13,29 @@
 
 -> MDP Random + Mail 
 
+->Gestion roles
+
 -> Responsive 
+
+  
+
+
+uploader les documents des apprenants directement sur le site.
+
+signature docusign 
+
+
+
+
+
+
+
+Direct via : Teams , Zoom,
+
+A l'inscription ; 
+
+generer => Contrat formation ,  
+
+
+document signé avant formation ; contrat - 
 

@@ -18,7 +18,7 @@
           <a class="nav-link" href="{{ route('admin.userFormateur') }}">Formateur</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('admin.qcm') }}">Qcm</a>
+          <a class="nav-link" href="{{ route('admin.QCM.createQcm') }}">Qcm</a>
         </li>
       </ul>
     </div>

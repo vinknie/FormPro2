@@ -3,77 +3,80 @@
 @section('content')
     @include('include.navadmin')
 
+    <div class="row">
+        <div class="col-3">@include('include.navQcmAdmin')</div>
 
-    <form class="" action="" method="post">
-        @csrf
-
-        <h1 class="text-center">Créer un QCM</h1>
-
-        <select name="id_formation[]">
-            <option value="">--Choisi une formation--</option>
-            @foreach ($formations as $formation)
-                <option value="{{ $formation->id_formation }}">{{ $formation->nom }}</option>
-            @endforeach
-        </select>
-
-        <select name="id_matiere">
-            {{-- <option value="">--Choisi une Matiere--</option> --}}
-        </select>
-
-        <select name="id_chapitre[]">
-
-        </select>
-        <hr>
-        <div class="col-md-4">
-            <label class="labels">Nom Du QCM</label>
-            <input class="form-control" type="text" name="titre" required="">
-        </div>
-        <hr>
-
-        <div class="clone">
-
-            <div class="col-md-8 questionOption">
-                
-                <label class="labels">Question?</label>
-                <input class="form-control" type="text" name="question[]" required="">
-
-                <label class="labels">Point de la question</label>
-                <input class="form-control" type="text" name="points[]" required="">
-
-                <select name="type[]" id="selecttype">
-                    <option value="">--Choisi un type--</option>
-                    <option value="truefalse">Vrai Ou Faux</option>
-                    <option value="multiple">Choix Multiple</option>
+        <div class="col-9">
+            <form class="" action="{{ url('/backoffice/qcm/question/createQuestion') }}" method="post" enctype="multipart/form-data">
+                @csrf
+        
+                <h1 class="text-center">Créer un Question</h1>
+                @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+                @endif
+        
+                <select name="id_formation[]">
+                    <option value="">--Choisi une formation--</option>
+                    @foreach ($formations as $formation)
+                        <option value="{{ $formation->id_formation }}">{{ $formation->nom }}</option>
+                    @endforeach
                 </select>
-                <div class="truefalse">
+        
+                <select name="id_matiere">
+                    {{-- <option value="">--Choisi une Matiere--</option> --}}
+                </select>
+        
+                <select name="id_chapitre[]">
+        
+                </select>
 
-                </div>
-                <div class="multiple">
+                <select name="id_qcm[]">
 
-                </div>
+                </select>
                 <hr>
-
-
+                <div class="col-md-8 questionOption">
+                
+                    <label class="labels">Question?</label>
+                    <input class="form-control" type="text" name="question[]" required="">
+    
+                    <label class="labels">Point de la question</label>
+                    <input class="form-control" type="text" name="points[]" required="">
+    
+                    <select name="type[]" id="selecttype">
+                        {{-- <option value="">--Choisi un type--</option> --}}
+                        <option value="truefalse">Vrai Ou Faux</option>
+                        <option value="multiple">Choix Multiple</option>
+                    </select>
+                    <div class="truefalse">
+    
+                    </div>
+                    <div class="multiple">
+    
+                    </div>
+                    <hr>
+    
+    
+                </div>
+                <button id="btncreate" type="submit" class="btn btn-success">Créer</button>
             </div>
 
+
+
         </div>
-
-        <div>
-            <input class="btn btn-warning" type="button" name="addQuestion" class="addQuestion" id="addQuestion" value="Ajouter Question">
-        </div>
-        <div class="row">
-            <div class="col-12 ps-0">
-                <button id="btncreate" type="submit" class="btn btn-primary">Créer</button>
-            </div>
-        </div>
-
-
-    </form>
+    </div>
 
 
 
 
 
+
+
+
+
+
+    
     <script>
         jQuery(document).ready(function() {
             jQuery('select[name="id_formation[]"]').on('change', function() {
@@ -121,17 +124,33 @@
                     $('select[name="id_chapitre[]"]').empty();
                 }
             });
+            jQuery('select[name="id_chapitre[]"]').on('change', function() {
+                var chapitreID = jQuery(this).val();
+                console.log(chapitreID);
+                if (chapitreID) {
+                    jQuery.ajax({
+                        url: '/backoffice/qcm/question/getQcm/' + chapitreID,
+                        type: "GET",
+                        dataType: "json",
+                        success: function(data) {
+                            jQuery('select[name="id_qcm[]"]').empty();
+                            jQuery.each(data, function(key, value) {
+                                $('select[name="id_qcm[]"]').append(
+                                    '<option value="' + key + '">' + value +
+                                    '</option>');
+                            });
+                        }
+                    });
+
+                } else {
+                    $('select[name="id_qcm[]"]').empty();
+                }
+            });
 
 
-            // let question =
-            //     `<label class="labels">Question?</label> <input class="form-control" type="text" name="question[]" required=""> <label class="labels">Point de la question</label> <input class="form-control" type="text" name="points[]" required=""> <select name="type[]" id="selecttype" class="selecttype"> <option value="">--Choisi un type--</option> <option value="truefalse">Vrai Ou Faux</option> <option value="multiple">Choix Multiple</option> </select> <div class="truefalse"> </div><div class="multiple"> </div><hr>`;
-
-            // $("#addQuestion").click(function() {
-            //     $(".questionOption").append(question);
 
 
 
-            // });
 
 
             el = document.getElementById('selecttype');
@@ -187,8 +206,6 @@
                             };
                         });
 
-         
-
 
         });
 
@@ -196,5 +213,14 @@
 
 
 
-    </script>
+</script>
+
+
+
+
+
+
+
+
+
 @endsection

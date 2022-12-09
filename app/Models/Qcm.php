@@ -12,7 +12,7 @@ class Qcm extends Model
     protected $table = 'qcm';
     protected $primaryKey = 'id_qcm';
 
-    protected $fillable =['id_chapitre','titre'];
+    protected $fillable =['id_chapitre','titre','actif'];
 
 
    

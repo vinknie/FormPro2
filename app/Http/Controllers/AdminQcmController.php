@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\User;
 use App\Models\Qcm;
+use App\Models\Question;
 use App\Models\Formation;
 use App\Models\Matiere;
 use App\Models\Chapitre;
@@ -18,7 +19,7 @@ class AdminQcmController extends Controller
         $matieres = Matiere::all();
         $formations = Formation::all();
 
-        return view('admin.qcm', compact('matieres', 'formations'));       
+        return view('admin.QCM.createQcm', compact('matieres', 'formations'));       
     }
 
     public function getMatieres($id_formation)
@@ -44,7 +45,7 @@ class AdminQcmController extends Controller
         }
         $matieres = $query->get();
 
-        return view('admin.qcm', compact('matieres', 'formations'));
+        return view('admin.QCM.createQcm', compact('matieres', 'formations'));
     }
 
     public function getChapitre($id_matiere)
@@ -70,6 +71,92 @@ class AdminQcmController extends Controller
         }
         $chapitres = $query->get();
 
-        return view('admin.qcm', compact('matieres', 'chapitres'));
+        return view('admin.QCM.createQcm', compact('matieres', 'chapitres'));
+    }
+
+
+    public function createQcm(Request $request){
+
+        $qcm = [];
+
+        foreach ($request->titre as $key => $value){
+            array_push($qcm,[
+                'id_chapitre'=>$request->id_chapitre[$key],
+                'titre'=>$request->titre[$key],
+
+            ]);
+        }
+
+        Qcm::insert($qcm);
+
+        return redirect()->back()->with('success', 'Le Qcm a bien été créer'); 
+
+    }
+
+
+    public function index2(){
+
+        $matieres = Matiere::all();
+        $formations = Formation::all();
+
+        return view('admin.QCM.createQuestion', compact('matieres', 'formations'));       
+    }
+
+    public function getQcm($id_chapitre)
+    {
+
+        $qcm = Qcm::where('id_chapitre', $id_chapitre)->pluck("titre", "id_qcm");
+        return json_encode($qcm);
+    }
+
+    public function filterQcm(Request $request)
+    {
+
+        $query = Qcm::query();
+        $chapitres = Chapitre::all();
+
+        if ($request->ajax()) {
+            if (empty($request->chapitre)) {
+                $qcm = $query->get();
+            } else {
+                $qcm = $query->where(['id_chapitre' => $request->chapitre])->get();
+            }
+            return response()->json(['qcm' => $qcm]);
+        }
+        $qcm = $query->get();
+
+        return view('admin.QCM.createQuestion', compact('chapitres', 'qcm'));
+    }
+
+
+    public function createQuestion(Request $request){
+
+        $question = [];
+
+        foreach ($request->question as $key => $value){
+            array_push($question,[
+            
+                'id_qcm'=>$request->id_qcm[$key],
+                'question'=>$request->question[$key],
+                'points'=>$request->points[$key],
+                'type'=>$request->type[$key],
+
+            ]);
+        }
+
+        Question::insert($question);
+
+        $option = [];
+
+        foreach($request->option as $key => $value){
+            array_push($option,[
+                'id_question' => $question['id_question'],
+                'option' => $request->option[$key],
+                'correct' => $request->correct[$key],
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'La Question a  bien été créé'); 
+
     }
 }
