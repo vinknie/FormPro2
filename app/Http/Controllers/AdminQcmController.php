@@ -7,10 +7,12 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Qcm;
 use App\Models\Question;
+use App\Models\Option;
 use App\Models\Formation;
 use App\Models\Matiere;
 use App\Models\Chapitre;
 use App\Models\Files;
+use Mockery\Undefined;
 
 class AdminQcmController extends Controller
 {
@@ -131,30 +133,28 @@ class AdminQcmController extends Controller
 
     public function createQuestion(Request $request){
 
-        $question = [];
-
-        foreach ($request->question as $key => $value){
-            array_push($question,[
+    
+        $question = new Question();
+        $question->id_qcm = $request->id_qcm;
+        $question->question = $request->question;
+        $question->points = $request->points;
+        $question->type = $request->type;
             
-                'id_qcm'=>$request->id_qcm[$key],
-                'question'=>$request->question[$key],
-                'points'=>$request->points[$key],
-                'type'=>$request->type[$key],
+        $question->save();
 
-            ]);
-        }
-
-        Question::insert($question);
-
-        $option = [];
-
+        $createOption = [];
+     
         foreach($request->option as $key => $value){
-            array_push($option,[
+        //    dump(in_array($request->option[$key],$request->input('correct')));
+            array_push($createOption,[
                 'id_question' => $question['id_question'],
                 'option' => $request->option[$key],
-                'correct' => $request->correct[$key],
-            ]);
-        }
+                'correct' => in_array($request->option[$key],$request->input('correct')) === true ? 1 : 0,  // Check la value dans les 2 tableaux 
+            ]); 
+         }
+        //  dump($createOption);
+        
+        Option::insert($createOption);
 
         return redirect()->back()->with('success', 'La Question a  bien été créé'); 
 
