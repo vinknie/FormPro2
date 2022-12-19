@@ -14,6 +14,9 @@ use App\Models\Chapitre;
 use App\Models\Files;
 use Mockery\Undefined;
 
+use App\Imports\QcmImport;
+use Maatwebsite\Excel\Facades\Excel;
+
 class AdminQcmController extends Controller
 {
     public function index(){
@@ -158,5 +161,23 @@ class AdminQcmController extends Controller
 
         return redirect()->back()->with('success', 'La Question a  bien été créé'); 
 
+    }
+
+    public function index3(){
+
+        return view('admin.QCM.import');       
+    }
+
+
+
+    public function import(Request $request){
+        $this->validate($request,[
+            'select_file' => 'required|mimes:xls,xlsx'
+        ]);
+
+        $path = $request->file('select_file')->getRealPath();
+        // $data = Excel::load($path, function($reader) {})->get();
+        $data = Excel::import(new QcmImport, $path);
+        // return back()->with('success', 'Excel Data Importé avec success.');
     }
 }

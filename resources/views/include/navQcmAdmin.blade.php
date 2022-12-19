@@ -15,8 +15,13 @@
        
     </div>
 
-    <div class="p-2">
+    <div class="border-0 border-bottom p-2">
         <a class=" text-decoration-none nav_links text-light" href="">Voir les Questions</a>
+    </div>
+
+    <div class="border-0 border-bottom p-2">
+        <a class=" text-decoration-none nav_links text-light" href="{{ route('admin.QCM.import') }}">Import QCM</a>
+       
     </div>
 
 </div>

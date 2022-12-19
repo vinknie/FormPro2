@@ -193,6 +193,9 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
     Route::get('/backoffice/qcm/question/getQcm/{id_chapitre}','AdminQcmController@getQcm');
     Route::get('/backoffice/qcm/question/filterQcm','AdminQcmController@filterQcm')->name('filterQcm');
     Route::post('/backoffice/qcm/question/createQuestion','AdminQcmController@createQuestion');
+
+    Route::get('/backoffice/qcm/import','AdminQcmController@index3')->name('admin.QCM.import');
+    Route::post('/backoffice/qcm/import/import','AdminQcmController@import');
     
 
 
