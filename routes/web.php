@@ -164,6 +164,10 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
     Route::get('backoffice/userApprenant/delete/{id}', 'AdminApprenantController@deleteApprenant')->name('admin.deleteApprenant');
     Route::get('backoffice/userApprenant/edit/delete/{id_formation}/{id_utilisateur}', 'AdminApprenantController@deleteUserFormation')->name('admin.deleteUserFormation');
 
+    //PDF USER
+    Route::get('/backoffice/userApprenant/pdf/entree/{id}/{id_formation}','AdminApprenantController@PdfEntree')->name('admin.PDF.attestationEntree');
+    Route::get('/backoffice/userApprenant/pdf/fin/{id}/{id_formation}','AdminApprenantController@PdfFin')->name('admin.PDF.attestationFin');
+    Route::get('/backoffice/userApprenant/pdf/contrat/{id}/{id_formation}','AdminApprenantController@contratFormation')->name('admin.PDF.contratFormation');
     
     // Route userFormateur Admin
 

@@ -15,11 +15,11 @@
             @endforeach
         @endif
 
-        <form class="" action="{{ route('admin.updateApprenant', $getUser->id) }}" method="post"
+        <form class="row" action="{{ route('admin.updateApprenant', $getUser->id) }}" method="post"
             enctype="multipart/form-data">
             @csrf
             <div class="col-md-6 border-right">
-                <div class="p-3 py-5">
+                <div class="p-3 pb-5">
                     <h3>Informations</h3>
                     <div class="row mt-2">
                         <div class="col-md-6"><label class="labels">Nom</label><input type="text" class="form-control"
@@ -118,7 +118,23 @@
                         </select>
                     </div>
                 </div>
-
+                
+                <div class="">
+                    <h3>Papier Nécessaire Formation</h3>
+                        @foreach($userFormation as $userformation)
+                        
+                           <h5>{{ $userformation->FormNom }} {{ $userformation->date_debut }}/{{ $userformation->date_fin }}</h5> 
+                           <div>
+                                <span>Attestation d'entrée : </span><a href="{{ URL::to('/backoffice/userApprenant/pdf/entree/' . $userformation->id . '/' .$userformation->id_formation ) }}" class="btn btn-warning"><i class="fas fa-file-pdf"></i> Télécharger <b>Attestation d'entrée</b></a>
+                            </div><br>
+                            <div>
+                                <span>Attestation de Fin : </span><a href="{{ URL::to('/backoffice/userApprenant/pdf/fin/' . $userformation->id . '/' .$userformation->id_formation ) }}" class="btn btn-warning"><i class="fas fa-file-pdf"></i> Télécharger <b>Attestation de fin</b></a>
+                            </div><br>
+                            <div>
+                                <span>Contrat de Formation : </span><a href="{{ URL::to('/backoffice/userApprenant/pdf/contrat/' . $userformation->id . '/' .$userformation->id_formation ) }}" class="btn btn-warning"><i class="fas fa-file-pdf"></i> Télécharger <b>Contrat de formation</b></a>
+                            </div>
+                        @endforeach
+                </div>
             </div>
     </div>
     </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\PDF;
 
 use App\Models\User;
 use App\Models\Formation;
@@ -66,7 +67,7 @@ class AdminApprenantController extends Controller
         $userFormation=DB::table('utilisateurs')
         ->join('user_formation','utilisateurs.id', '=' , 'user_formation.id_utilisateur')
         ->join('formation' ,'formation.id_formation', '=' , 'user_formation.id_formation')
-        ->select('formation.nom AS FormNom','formation.date_debut','formation.date_fin','user_formation.id_utilisateur', 'user_formation.id_formation')
+        ->select('formation.nom AS FormNom','formation.date_debut','formation.date_fin','user_formation.id_utilisateur', 'user_formation.id_formation','utilisateurs.id')
         ->where('user_formation.id_utilisateur' ,'=', $getUser->id) 
         ->get();
 
@@ -139,5 +140,69 @@ class AdminApprenantController extends Controller
         $delete = User::where('id',$id)->delete();
         return redirect()->back();
     }
+
+    // Function pour les PDF   
+
+    public function PdfEntree($id,$id_formation){
+
+        
+        $getformation=Formation::find($id_formation);
+        $getUser= User::find($id);
+        $userFormation=DB::table('utilisateurs')
+        ->join('user_formation','utilisateurs.id', '=' , 'user_formation.id_utilisateur')
+        ->join('formation' ,'formation.id_formation', '=' , 'user_formation.id_formation')
+        ->select('formation.nom AS FormNom','formation.date_debut','formation.date_fin','user_formation.id_utilisateur', 'user_formation.id_formation')
+        ->where('user_formation.id_utilisateur' ,'=', $getUser->id) 
+        ->where('user_formation.id_formation','=', $getformation->id_formation)
+        ->get();
+
+        $pdf = PDF::loadView('admin.PDF.attestationEntree', compact('userFormation','getUser','getformation'))->output();
+        return response()->streamDownload(
+            fn ()=> print($pdf),
+            "Attestion_d'entrée_".$userFormation[0]->FormNom."_"."$getUser->nom"."_"."$getUser->prenom".".pdf"
+        );
+        // return view('admin.PDF.attestationEntree',compact('userFormation','getUser','getformation'));
+    }
+    public function PdfFin($id,$id_formation){
+
+        
+        $getformation=Formation::find($id_formation);
+        $getUser= User::find($id);
+        $userFormation=DB::table('utilisateurs')
+        ->join('user_formation','utilisateurs.id', '=' , 'user_formation.id_utilisateur')
+        ->join('formation' ,'formation.id_formation', '=' , 'user_formation.id_formation')
+        ->select('formation.nom AS FormNom','formation.date_debut','formation.date_fin','user_formation.id_utilisateur', 'user_formation.id_formation')
+        ->where('user_formation.id_utilisateur' ,'=', $getUser->id) 
+        ->where('user_formation.id_formation','=', $getformation->id_formation)
+        ->get();
+
+         $pdf = PDF::loadView('admin.PDF.attestationFin', compact('userFormation','getUser','getformation'))->output();
+            return response()->streamDownload(
+             fn ()=> print($pdf),
+             "Attestion_de_fin_".$userFormation[0]->FormNom."_"."$getUser->nom"."_"."$getUser->prenom".".pdf"
+        );
+        // return view('admin.PDF.attestationFin',compact('userFormation','getUser','getformation'));
+    }
+    public function contratFormation($id,$id_formation){
+
+        
+        $getformation=Formation::find($id_formation);
+        $getUser= User::find($id);
+        $userFormation=DB::table('utilisateurs')
+        ->join('user_formation','utilisateurs.id', '=' , 'user_formation.id_utilisateur')
+        ->join('formation' ,'formation.id_formation', '=' , 'user_formation.id_formation')
+        ->select('formation.nom AS FormNom','formation.date_debut','formation.date_fin','user_formation.id_utilisateur', 'user_formation.id_formation')
+        ->where('user_formation.id_utilisateur' ,'=', $getUser->id) 
+        ->where('user_formation.id_formation','=', $getformation->id_formation)
+        ->get();
+
+         $pdf = PDF::loadView('admin.PDF.contratFormation', compact('userFormation','getUser','getformation'))->output();
+            return response()->streamDownload(
+             fn ()=> print($pdf),
+             "Attestion_de_fin_".$userFormation[0]->FormNom."_"."$getUser->nom"."_"."$getUser->prenom".".pdf"
+        );
+        // return view('admin.PDF.contratFormation',compact('userFormation','getUser','getformation'));
+    }
+
     
 }
