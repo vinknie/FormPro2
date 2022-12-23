@@ -168,6 +168,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
     Route::get('/backoffice/userApprenant/pdf/entree/{id}/{id_formation}','AdminApprenantController@PdfEntree')->name('admin.PDF.attestationEntree');
     Route::get('/backoffice/userApprenant/pdf/fin/{id}/{id_formation}','AdminApprenantController@PdfFin')->name('admin.PDF.attestationFin');
     Route::get('/backoffice/userApprenant/pdf/contrat/{id}/{id_formation}','AdminApprenantController@contratFormation')->name('admin.PDF.contratFormation');
+    Route::get('/backoffice/userApprenant/pdf/convention/{id}/{id_formation}','AdminApprenantController@conventionFormation')->name('admin.PDF.conventionFormation');
     
     // Route userFormateur Admin
 

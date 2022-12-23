@@ -132,7 +132,10 @@
                             </div><br>
                             <div>
                                 <span>Contrat de Formation : </span><a href="{{ URL::to('/backoffice/userApprenant/pdf/contrat/' . $userformation->id . '/' .$userformation->id_formation ) }}" class="btn btn-warning"><i class="fas fa-file-pdf"></i> Télécharger <b>Contrat de formation</b></a>
-                            </div>
+                            </div><br>
+                            <div>
+                                <span>Convention de Formation : </span><a href="{{ URL::to('/backoffice/userApprenant/pdf/convention/' . $userformation->id . '/' .$userformation->id_formation ) }}" class="btn btn-warning"><i class="fas fa-file-pdf"></i> Télécharger <b>Convention de formation</b></a>
+                            </div><br>
                         @endforeach
                 </div>
             </div>
