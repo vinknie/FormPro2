@@ -199,7 +199,7 @@ class AdminApprenantController extends Controller
          $pdf = PDF::loadView('admin.PDF.contratFormation', compact('userFormation','getUser','getformation'))->output();
             return response()->streamDownload(
              fn ()=> print($pdf),
-             "Attestion_de_fin_".$userFormation[0]->FormNom."_"."$getUser->nom"."_"."$getUser->prenom".".pdf"
+             "Contrat_de_formation_".$userFormation[0]->FormNom."_"."$getUser->nom"."_"."$getUser->prenom".".pdf"
         );
         // return view('admin.PDF.contratFormation',compact('userFormation','getUser','getformation'));
     }
@@ -217,12 +217,12 @@ class AdminApprenantController extends Controller
         ->where('user_formation.id_formation','=', $getformation->id_formation)
         ->get();
 
-        //  $pdf = PDF::loadView('admin.PDF.conventionFormation', compact('userFormation','getUser','getformation'))->output();
-        //     return response()->streamDownload(
-        //      fn ()=> print($pdf),
-        //      "Attestion_de_fin_".$userFormation[0]->FormNom."_"."$getUser->nom"."_"."$getUser->prenom".".pdf"
-        // );
-        return view('admin.PDF.conventionFormation',compact('userFormation','getUser','getformation'));
+         $pdf = PDF::loadView('admin.PDF.conventionFormation', compact('userFormation','getUser','getformation'))->output();
+            return response()->streamDownload(
+             fn ()=> print($pdf),
+             "Convention_de_formation_".$userFormation[0]->FormNom."_"."$getUser->nom"."_"."$getUser->prenom".".pdf"
+        );
+        // return view('admin.PDF.conventionFormation',compact('userFormation','getUser','getformation'));
     }
 
     
