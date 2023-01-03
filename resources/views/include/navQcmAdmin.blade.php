@@ -6,7 +6,7 @@
     </div>
 
     <div class="border-0 border-bottom p-2">
-        <a class="text-decoration-none nav_links text-light" href="">Voir les QCM</a>
+        <a class="text-decoration-none nav_links text-light" href="{{ route('admin.QCM.viewQcm') }}">Voir les QCM</a>
        
     </div>
 

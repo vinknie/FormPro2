@@ -201,6 +201,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
 
     Route::get('/backoffice/qcm/import','AdminQcmController@index3')->name('admin.QCM.import');
     Route::post('/backoffice/qcm/import/import','AdminQcmController@import');
+
+    Route::get('/backoffice/qcm/viewQcm','AdminQcmController@viewQcm')->name('admin.QCM.viewQcm');
     
 
 

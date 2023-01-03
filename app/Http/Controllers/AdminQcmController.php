@@ -180,4 +180,16 @@ class AdminQcmController extends Controller
         $data = Excel::import(new QcmImport, $path);
         // return back()->with('success', 'Excel Data Importé avec success.');
     }
+
+
+    public function viewQcm(){
+  
+        $matieres = Matiere::all();
+        $formations = Formation::all();
+    
+        return view('admin.QCM.viewQcm', compact('matieres', 'formations'));         
+    }
+    
+
+
 }
