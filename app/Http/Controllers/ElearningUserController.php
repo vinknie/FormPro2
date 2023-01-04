@@ -119,9 +119,6 @@ class ElearningUserController extends Controller
         
         $chapitres= $query->get();
         
-       
-        
-
         return view('pages.cours',compact('chapitres'));
     }
 

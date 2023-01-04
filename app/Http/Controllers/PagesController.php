@@ -140,7 +140,7 @@ class PagesController extends Controller
     {
        $user= Auth::User();
        if(Auth::guest()){
-        return view('pages.login');
+        return redirect()->route('pages.login');
        }else{
         $userFormation=DB::table('utilisateurs')
         ->join('user_formation','utilisateurs.id', '=' , 'user_formation.id_utilisateur')

@@ -15,6 +15,8 @@ use App\Models\Files;
 use Mockery\Undefined;
 
 use App\Imports\QcmImport;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class AdminQcmController extends Controller
@@ -23,12 +25,14 @@ class AdminQcmController extends Controller
 
         $matieres = Matiere::all();
         $formations = Formation::all();
+        
 
         return view('admin.QCM.createQcm', compact('matieres', 'formations'));       
     }
 
     public function getMatieres($id_formation)
     {
+
 
         $matieres = Matiere::where('id_formation', $id_formation)->pluck("nom", "id_matiere");
         return json_encode($matieres);
@@ -183,11 +187,93 @@ class AdminQcmController extends Controller
 
 
     public function viewQcm(){
+        // $matieres = Matiere::all();
+        $user= Auth::User();
+        if($user){
+            
+            $role_user = User::find($user->id)->role;
+            
+            if($role_user == 'admin' ||$role_user == 'secretaire'){
+                $formations = Formation::all(); // Admin ; secretaire
+                
+                return view('admin.QCM.viewQcm', compact('formations')); 
+            }else if($role_user == 'formateur'){
+                $formationFormateur=DB::table('utilisateurs')
+                ->join('matiere', 'matiere.id_utilisateurs' , '=' , 'utilisateurs.id')
+                ->join('formation','formation.id_formation' , '=' ,'matiere.id_formation')
+                ->select('utilisateurs.nom' ,'utilisateurs.id' , 'utilisateurs.prenom','utilisateurs.email','utilisateurs.role','utilisateurs.sexe','utilisateurs.telephone','formation.nom AS nomForm','formation.date_debut','formation.date_fin','matiere.nom AS nomMat','matiere.id_utilisateurs AS idUserMat','matiere.id_matiere','formation.id_formation')
+                ->where('utilisateurs.id' , '=' , $user->id)
+                ->get();
+                
+                return view('admin.QCM.viewQcm', compact('formationFormateur')); 
+            }
+        }else{
+            return redirect()->route('pages.login');
+        }
   
-        $matieres = Matiere::all();
-        $formations = Formation::all();
+        // $matieres = Matiere::all();
+        // $formations = Formation::all(); // Admin ; secretaire
+
+
+        // $formationFormateur=DB::table('utilisateurs')
+        // ->join('matiere', 'matiere.id_utilisateurs' , '=' , 'utilisateurs.id')
+        // ->join('formation','formation.id_formation' , '=' ,'matiere.id_formation')
+        // ->select('utilisateurs.nom' ,'utilisateurs.id' , 'utilisateurs.prenom','utilisateurs.email','utilisateurs.role','utilisateurs.sexe','utilisateurs.telephone','formation.nom AS nomForm','formation.date_debut','formation.date_fin','matiere.nom AS nomMat','matiere.id_utilisateurs AS idUserMat','matiere.id_matiere')
+        // ->where('utilisateurs.id' , '=' , $user->id)
+        // ->get();
+        
+        // return view('admin.QCM.viewQcm', compact('formations','formationFormateur'));   
+        
+    }
+
+    public function getMatieresFormateur($id_formation)
+    {
+        $id_user  = Auth::user()->id;
+        $role_user = User::find($id_user)->role;
+
+        if($role_user == 'admin' || $role_user == 'secretaire'){
+            $matieres = Matiere::where('id_formation', $id_formation)
+            ->pluck("nom", "id_matiere");
+            return json_encode($matieres);
+
+        }else if($role_user == 'formateur'){
+            $matieres = Matiere::where('id_formation', $id_formation)
+            ->where('id_utilisateurs', $id_user)
+            ->pluck("nom", "id_matiere");
+            return json_encode($matieres);
+        }
     
-        return view('admin.QCM.viewQcm', compact('matieres', 'formations'));         
+
+        // $matieres = Matiere::where('id_formation', $id_formation)
+        // ->where('id_utilisateurs', $id_user)
+        // ->pluck("nom", "id_matiere");
+        // return json_encode($matieres);
+    }
+
+    public function filterMatiereView(Request $request)
+    {
+
+        $query = DB::table('qcm')
+        ->Join('chapitre' , 'qcm.id_chapitre','=','chapitre.id_chapitre')
+        ->Join('matiere','chapitre.id_matiere','=','matiere.id_matiere')
+        ->select('qcm.*','chapitre.*','matiere.*')
+        ->where('qcm.id_chapitre' , $request->matiere)
+        ->groupBy('qcm.id_qcm')
+        ->get();
+
+        return response()->json(['qcm' => $query]);
+
+        // if ($request->ajax()) {
+        //     if (empty($request->matiere)) {
+        //         $qcm = $query->get();
+        //     } else {
+        //         $qcm = $query->where(['qcm.id_chapitre' => $request->matiere])->get();
+        //     }
+        //     return response()->json(['qcm' => $qcm]);
+        // }
+        // $qcm = $query->get();
+
+        return view('admin.QCM.viewQCM', compact('chapitre', 'qcm'));
     }
     
 

@@ -24,6 +24,7 @@
       </li>
       
       <li><a href="#contactfooter">Contact</a></li>
+
      @auth <!-- Si log menu apparait -->
      
           
@@ -36,11 +37,19 @@
     </li>
       
     @endauth
+
     <li><a href="{{ route('pages.satisfaction') }}">Satisfaction</a></li>  
       
       {{-- <li><a href="{{ route('pages.admin') }}">BackOffice</a></li> --}}
-
-      <li><a href="{{ route('admin.backoffice') }}">BackOffice2</a></li>
+    @admin 
+        <li><a href="{{ route('admin.backoffice') }}">BackOffice2</a></li>
+    @endadmin 
+    @secretaire
+        <li><a href="{{ route('admin.backoffice') }}">BackOffice2</a></li>
+    @endsecretaire
+    @formateur
+        <li><a href="{{ route('admin.backoffice') }}">BackOffice2</a></li>
+    @endformateur
 
          <li class="nav-item">
               <a class="nav-link" href="{{ route('pages.register') }}">Inscription</a>
