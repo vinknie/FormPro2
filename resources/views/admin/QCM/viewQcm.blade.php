@@ -92,23 +92,24 @@
                     var qcm = data.qcm;
                     var html = '';
                     console.log(data);
-                    // if(qcm.length > 0){
-                    //     for(let i = 0; i<qcm.length; i++){
-                    //         html += '<tr>\
-                    //             <td>'+qcm[i]['nom']+'</td>\
-                    //             <td><a href="/backoffice/chapitre/editchapitre/'+qcm[i]["id_matiere"]+'" class="btn btn-primary">Edit</a></td>\
-                    //             </tr>';
-                    //         console.log(matieres[i]['id_matiere']);
-                    //     }
+                    if(qcm.length > 0){
+                        for(let i = 0; i<qcm.length; i++){
+                            html += '<tr>\
+                                <td>'+qcm[i]['titre']+'</td>\
+                                <td>'+qcm[i]['nom']+'</td>\
+                                <td><a href="/backoffice/chapitre/editchapitre/'+qcm[i]["id_qcm"]+'" class="btn btn-primary">Edit</a></td>\
+                                </tr>';
+                            
+                        }
 
                     
 
-                    // }
-                    // else{
-                    //     html += '<tr>\
-                    //         <td>Pas de Matiere Trouvé</td>\
-                    //         </tr>';
-                    // }
+                    }
+                    else{
+                        html += '<tr>\
+                            <td>Pas de QCM pour cette Matiere</td>\
+                            </tr>';
+                    }
                     $("#tbody").html(html);
                     
                 }

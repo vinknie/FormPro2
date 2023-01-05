@@ -256,22 +256,21 @@ class AdminQcmController extends Controller
         $query = DB::table('qcm')
         ->Join('chapitre' , 'qcm.id_chapitre','=','chapitre.id_chapitre')
         ->Join('matiere','chapitre.id_matiere','=','matiere.id_matiere')
-        ->select('qcm.*','chapitre.*','matiere.*')
-        ->where('qcm.id_chapitre' , $request->matiere)
-        ->groupBy('qcm.id_qcm')
-        ->get();
+        ->select('qcm.id_qcm','qcm.titre','chapitre.id_chapitre','chapitre.nom','matiere.*')
+        ->groupBy('qcm.id_qcm');
+        
 
-        return response()->json(['qcm' => $query]);
+        
 
-        // if ($request->ajax()) {
-        //     if (empty($request->matiere)) {
-        //         $qcm = $query->get();
-        //     } else {
-        //         $qcm = $query->where(['qcm.id_chapitre' => $request->matiere])->get();
-        //     }
-        //     return response()->json(['qcm' => $qcm]);
-        // }
-        // $qcm = $query->get();
+        if ($request->ajax()) {
+            if (empty($request->matiere)) {
+                $qcm = $query->get();
+            } else {
+                $qcm = $query->where(['matiere.id_matiere' => $request->matiere])->get();
+            }
+            return response()->json(['qcm' => $qcm]);
+        }
+        $qcm = $query->get();
 
         return view('admin.QCM.viewQCM', compact('chapitre', 'qcm'));
     }
