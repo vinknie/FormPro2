@@ -201,8 +201,9 @@ class AdminQcmController extends Controller
                 $formationFormateur=DB::table('utilisateurs')
                 ->join('matiere', 'matiere.id_utilisateurs' , '=' , 'utilisateurs.id')
                 ->join('formation','formation.id_formation' , '=' ,'matiere.id_formation')
-                ->select('utilisateurs.nom' ,'utilisateurs.id' , 'utilisateurs.prenom','utilisateurs.email','utilisateurs.role','utilisateurs.sexe','utilisateurs.telephone','formation.nom AS nomForm','formation.date_debut','formation.date_fin','matiere.nom AS nomMat','matiere.id_utilisateurs AS idUserMat','matiere.id_matiere','formation.id_formation')
+                ->select('utilisateurs.nom' ,'utilisateurs.id' , 'utilisateurs.prenom','utilisateurs.email','utilisateurs.role','utilisateurs.sexe','utilisateurs.telephone','formation.id_formation','formation.nom AS nomForm','formation.date_debut','formation.date_fin','matiere.nom AS nomMat','matiere.id_utilisateurs AS idUserMat','matiere.id_matiere','formation.id_formation')
                 ->where('utilisateurs.id' , '=' , $user->id)
+                ->groupBy('formation.id_formation')
                 ->get();
                 
                 return view('admin.QCM.viewQcm', compact('formationFormateur')); 
@@ -275,6 +276,22 @@ class AdminQcmController extends Controller
         return view('admin.QCM.viewQCM', compact('chapitre', 'qcm'));
     }
     
+    public function editQcm($id_qcm){
+        
+
+        $matieres = Matiere::all();
+        $formations = Formation::all();
+
+        $getQcm = Qcm::find($id_qcm);
+        $qcm =DB::table('qcm')
+        ->select('qcm.*')
+        ->where('qcm.id_qcm','=',$getQcm->id_qcm)
+        ->get();
+
+        return view('admin.QCM.editQcm', compact('matieres','formations','getQcm','qcm'));
+
+
+    }
 
 
 }

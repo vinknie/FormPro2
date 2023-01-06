@@ -204,7 +204,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
 
     Route::get('/backoffice/qcm/viewQcm','AdminQcmController@viewQcm')->name('admin.QCM.viewQcm');
     Route::get('/backoffice/qcm/viewQcm/getMatieresFormateur/{id_formation}','AdminQcmController@getMatieresFormateur');
-    Route::get('/backofficeqcm/viewQcm/filterMatiere','AdminQcmController@filterMatiereView')->name('filterMatiereView');
+    Route::get('/backoffice/qcm/viewQcm/filterMatiere','AdminQcmController@filterMatiereView')->name('filterMatiereView');
+    Route::get('/backoffice/qcm/viewQcm/editQcm/{id_qcm}', 'AdminQcmController@editQcm')->name('admin.QCM.editQcm');
     
 
 

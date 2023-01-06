@@ -22,7 +22,7 @@
                 @endif
             </select>
             <select name="id_matiere" id="id_matiere" >
-                {{-- <option value="">--Choisi une Matiere--</option> --}}
+                <option id='test' value="">--Choisi une Matiere--</option>
             </select>
 
             <table class="table table-bordered">
@@ -56,11 +56,23 @@
 
 
 <script>
+  const test = document.getElementById('test');
+  test.addEventListener('click', function(e){
+    
+
+    // $('#tbody').empty();
+    console.log('hi');
+    })
+//   function test(count, key, value) {
+
+//   }
     jQuery(document).ready(function()
     {
         jQuery('select[name="id_formation"]').on('change',function(){
             var formationID = jQuery(this).val();
             console.log(formationID);
+            
+
             if(formationID)
             {
                 jQuery.ajax({
@@ -69,8 +81,13 @@
                     dataType : "json",
                     success:function(data)
                     {
-                        jQuery('select[name="id_matiere"]').empty();
+                        
+                        jQuery('select[name="id_matiere"]').find('option').not(':first').remove();
+                        
+                        // let count = 0 ;
+
                         jQuery.each(data, function(key,value){
+                            // $('select[name="id_matiere"]').append("<option value="">--Choisi une Matiere--</option>"); 
                             $('select[name="id_matiere"]').append('<option value="'+ key +'">'+ value +'</option>');
                         });
                     }
@@ -78,14 +95,14 @@
 
             }
             else{
-                $('select[name="id_matiere"]').empty();
+                $('select[name="id_matiere"]').find('option').not(':first').remove();
             }
         });
 
         $("#id_matiere").on('change',function(){
             var matiere = $(this).val();
             $.ajax({
-                url : '/backofficeqcm/viewQcm/filterMatiere',
+                url : '/backoffice/qcm/viewQcm/filterMatiere',
                 type:"GET",
                 data:{'matiere':matiere},
                 success:function(data){
@@ -95,9 +112,11 @@
                     if(qcm.length > 0){
                         for(let i = 0; i<qcm.length; i++){
                             html += '<tr>\
-                                <td>'+qcm[i]['titre']+'</td>\
-                                <td>'+qcm[i]['nom']+'</td>\
-                                <td><a href="/backoffice/chapitre/editchapitre/'+qcm[i]["id_qcm"]+'" class="btn btn-primary">Edit</a></td>\
+                                    <form class="" action="{{ url("backoffice/qcm/editQcm/'+qcm[i]['id_qcm']+'") }}" method="post" enctype="multipart/form-data">\
+                                        <td><input value="'+qcm[i]['titre']+'" disabled></td>\
+                                        <td>'+qcm[i]['nom']+'</td>\
+                                        <td><a href="" class="btn btn-primary" id="editbutton">Edit</a> <button type="submit" href="" class="btn btn-success" id="form-submit" name="edittitre">Confirmer</button></td>\
+                                    </form>\
                                 </tr>';
                             
                         }
