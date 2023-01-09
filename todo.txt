@@ -1,7 +1,4 @@
 
-
-
-
 ->Quizz 
 ->Presence
 ->Stream 
@@ -17,18 +14,9 @@
 
 -> Responsive 
 
-  
-
-
 uploader les documents des apprenants directement sur le site.
 
 signature docusign 
-
-
-
-
-
-
 
 Direct via : Teams , Zoom,
 
@@ -39,3 +27,63 @@ generer => Contrat formation ,
 
 document signé avant formation ; contrat - 
 
+TODO LIST :
+
+General : 
+
+- CSS complet
+- Sécurité global
+- Revoir tout Dropdown 
+- Gestions des roles
+- HASH URL GET(Id)
+- Value input = Value in console 
+- MDP Random + Mail 
+
+Guest : 
+
+- creer une page ou afficher toutes les formations disponible avec toutes les informations
+-
+
+User : 
+
+Page Cours : Supprimer les liens de téléchargement des PDFs et des Videos 
+            (Rajouter une barre de recherche)
+            (faire de la pagination)
+
+Page Direct : A voir plus tard
+
+Page Examen : -QCM : Afficher le QCM 
+
+              -Enonce : visualisation/Telechargement de fichier PDF(préalable enregistré en bdd)
+                        Ajouté une zone de depot de fichier.
+
+Page Satisfaction : ( ? )
+
+Page Presence : Cocher  ou signer sa presence chaque jour / Demi journée
+
+
+Admin : 
+
+Page Formation : - Ajouter en BDD des informations 
+                 -  Cliquer sur (+) Afficher les matieres de la formation ainsi que les formateurs lié ou null (refaire le JS)
+
+Page Chapitre : - Afficher les chapitres lié au matieres en cliquant sur un (+)
+                - Ajouter une pagination 
+
+Page Fichier :  - Refaire le formulaire  et ajouter des informations . 
+
+Page Apprenant : - Ajouter un bouton pour creer un apprenant 
+                 - Modifier nombre pagination
+
+Page Formateur : - Ajouter un bouton pour creer un Formateur
+                 - Ajouter une pagination
+
+Page Qcm :   - Creer un qcm : 
+             - Voir les Qcm : Modifier via input
+             - Creer une question : 
+             - Voir les question : Faire l'affichage et les modification via input
+             - Import Qcm : Faire la requete pour que tout senregistre bien en bdd avec les bons champs enctype
+
+Page Satisfaction : Creer les QCM,
+                    
+Page presence :  Verification des apprenants qui ont signaler leur presence
