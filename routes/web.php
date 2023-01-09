@@ -183,6 +183,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
    
     // Route QCM Admin
 
+        // Create QCM
     Route::get('/backoffice/qcm','AdminQcmController@index')->name('admin.QCM.createQcm');
     Route::get('/backoffice/qcm/getMatieres/{id_formation}','AdminQcmController@getMatieres');
     Route::get('/backoffice/qcm/filterMatiere','AdminQcmController@filterMatiereInQCM')->name('filterMatiereInQCM');
@@ -190,6 +191,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
     Route::get('/backoffice/qcm/filterChapitre','AdminQcmController@filterChapitre')->name('filterChapitreInQCM');
     Route::post('/backoffice/qcm/createQcm','AdminQcmController@createQcm');
     
+        // Create Question
     Route::get('/backoffice/qcm/question','AdminQcmController@index2')->name('admin.QCM.createQuestion');
     Route::get('/backoffice/qcm/question/getMatieres/{id_formation}','AdminQcmController@getMatieres');
     Route::get('/backoffice/qcm/question/filterMatiere','AdminQcmController@filterMatiereInQCM')->name('filterMatiereInQuestion');
@@ -199,16 +201,19 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
     Route::get('/backoffice/qcm/question/filterQcm','AdminQcmController@filterQcm')->name('filterQcm');
     Route::post('/backoffice/qcm/question/createQuestion','AdminQcmController@createQuestion');
 
+        // Import Qcm
     Route::get('/backoffice/qcm/import','AdminQcmController@index3')->name('admin.QCM.import');
     Route::post('/backoffice/qcm/import/import','AdminQcmController@import');
 
+        // view Qcm
     Route::get('/backoffice/qcm/viewQcm','AdminQcmController@viewQcm')->name('admin.QCM.viewQcm');
     Route::get('/backoffice/qcm/viewQcm/getMatieresFormateur/{id_formation}','AdminQcmController@getMatieresFormateur');
     Route::get('/backoffice/qcm/viewQcm/filterMatiere','AdminQcmController@filterMatiereView')->name('filterMatiereView');
     Route::get('/backoffice/qcm/viewQcm/editQcm/{id_qcm}', 'AdminQcmController@editQcm')->name('admin.QCM.editQcm');
     
-
-
+        // View Question
+    Route::get('/backoffice/qcm/viewQuestion','AdminQcmController@viewQuestion')->name('admin.QCM.viewQuestion');
+    Route::get('/backoffice/qcm/viewQuestion/showQuestion','AdminQcmController@showQuestion')->name('showQuestion');
      
 });
    

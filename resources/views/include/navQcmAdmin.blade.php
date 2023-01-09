@@ -16,7 +16,7 @@
     </div>
 
     <div class="border-0 border-bottom p-2">
-        <a class=" text-decoration-none nav_links text-light" href="">Voir les Questions</a>
+        <a class=" text-decoration-none nav_links text-light" href="{{ route('admin.QCM.viewQuestion') }}">Voir les Questions</a>
     </div>
 
     <div class="border-0 border-bottom p-2">

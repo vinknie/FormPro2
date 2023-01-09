@@ -8,7 +8,7 @@
         <div class="col-3">@include('include.navQcmAdmin')</div>
 
         <div class="col-9">
-        <h1 class="text-center">Voir les QCM</h1>
+            <h1 class="text-center">Voir les Questions</h1>
             <select name="id_formation" id="id_formation">
                 <option value="">Select Formation</option>
                 @if(isset($formations))
@@ -28,8 +28,11 @@
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th>Titre du QCM</th> 
+                    <th>Question</th> 
+                    <th>Qcm</th>
                     <th>Chapitre</th>
+                    
+                    
                     <td colspan = 3>Action</td>
                 </tr>
                 </thead>
@@ -37,35 +40,14 @@
                 
                 </tbody>
             </table>
+
+
         </div>
     </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <script>
-  const test = document.getElementById('test');
-  test.addEventListener('click', function(e){
-    
 
-    // $('#tbody').empty();
-    console.log('hi');
-    })
-//   function test(count, key, value) {
-
-//   }
     jQuery(document).ready(function()
     {
         jQuery('select[name="id_formation"]').on('change',function(){
@@ -102,25 +84,22 @@
         $("#id_matiere").on('change',function(){
             var matiere = $(this).val();
             $.ajax({
-                url : '/backoffice/qcm/viewQcm/filterMatiere',
+                url : '/backoffice/qcm/viewQuestion/showQuestion',
                 type:"GET",
                 data:{'matiere':matiere},
                 success:function(data){
-                    var qcm = data.qcm;
+                    var question = data.question;
                     var html = '';
                     console.log(data);
-                    if(qcm.length > 0){
-                        for(let i = 0; i<qcm.length; i++){
-                            let url = "backoffice/qcm/editQcm/"+qcm[i]["id_qcm"];
-                            console.log(url);
+                    if(question.length > 0){
+                        for(let i = 0; i<question.length; i++){
                             html += '<tr>\
-                                    <form class="" action="'+url+'" method="post" enctype="multipart/form-data">\
-                                        <td><input class="titreinputs" value="'+qcm[i]['titre']+'" disabled></td>\
-                                        <td>'+qcm[i]['nom']+'</td>\
-                                        <td><button class="btn btn-primary editbuttons">Edit</button> <button type="submit" href="" class="btn btn-success d-none" id="form-submit" name="edittitre">Confirmer</button></td>\
-                                    </form>\
+                                        <td>'+question[i]['question']+'</td>\
+                                        <td>'+question[i]['titre']+'</td>\
+                                        <td>'+question[i]['nom']+'</td>\
+                                        <td><a href="" class="btn btn-primary" id="editbutton">Edit</a></td>\
                                 </tr>';
-
+                            
                         }
 
                     
@@ -128,7 +107,7 @@
                     }
                     else{
                         html += '<tr>\
-                            <td>Pas de QCM pour cette Matiere</td>\
+                            <td>Pas de Question pour cette Matiere</td>\
                             </tr>';
                     }
                     $("#tbody").html(html);
@@ -137,33 +116,8 @@
             })
         })
 
+
     });
 
-        
-    document.body.addEventListener('click', function(e) {
-        const edit = document.querySelectorAll('.editbuttons');
-        const input = document.querySelectorAll('.titreinputs');
-        const submit = document.querySelector('#form-submit');
-        
-
-            // edit.forEach(function (btn, i){
-            //      btn.addEventListener('click',function(){
-            //         input[i].removeAttribute('disabled');
-            //     })
-           
-            // // submit.classList.remove('d-none');
-            // // edit.classList.add('d-none');
-            // });
-
-            for(let i=0 ; i<edit.length ; i++){
-                edit[i].addEventListener('click', function(i){
-                    console.log(i);
-                }.bind(null,i))
-            }
-    })
-    
-
 </script> 
-
-
 @endsection

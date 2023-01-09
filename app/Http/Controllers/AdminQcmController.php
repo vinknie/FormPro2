@@ -259,10 +259,7 @@ class AdminQcmController extends Controller
         ->Join('matiere','chapitre.id_matiere','=','matiere.id_matiere')
         ->select('qcm.id_qcm','qcm.titre','chapitre.id_chapitre','chapitre.nom','matiere.*')
         ->groupBy('qcm.id_qcm');
-        
-
-        
-
+ 
         if ($request->ajax()) {
             if (empty($request->matiere)) {
                 $qcm = $query->get();
@@ -291,6 +288,55 @@ class AdminQcmController extends Controller
         return view('admin.QCM.editQcm', compact('matieres','formations','getQcm','qcm'));
 
 
+    }
+
+    public function viewQuestion(){
+        $user= Auth::User();
+        if($user){
+            
+            $role_user = User::find($user->id)->role;
+            
+            if($role_user == 'admin' ||$role_user == 'secretaire'){
+                $formations = Formation::all(); // Admin ; secretaire
+                
+                return view('admin.QCM.viewQuestion', compact('formations')); 
+            }else if($role_user == 'formateur'){
+                $formationFormateur=DB::table('utilisateurs')
+                ->join('matiere', 'matiere.id_utilisateurs' , '=' , 'utilisateurs.id')
+                ->join('formation','formation.id_formation' , '=' ,'matiere.id_formation')
+                ->select('utilisateurs.nom' ,'utilisateurs.id' , 'utilisateurs.prenom','utilisateurs.email','utilisateurs.role','utilisateurs.sexe','utilisateurs.telephone','formation.id_formation','formation.nom AS nomForm','formation.date_debut','formation.date_fin','matiere.nom AS nomMat','matiere.id_utilisateurs AS idUserMat','matiere.id_matiere','formation.id_formation')
+                ->where('utilisateurs.id' , '=' , $user->id)
+                ->groupBy('formation.id_formation')
+                ->get();
+                
+                return view('admin.QCM.viewQuestion', compact('formationFormateur')); 
+            }
+        }else{
+            return redirect()->route('pages.login');
+        }
+    }
+
+    public function showQuestion(Request $request)
+    {
+
+        $query = DB::table('qcm')
+        ->Join('chapitre' , 'qcm.id_chapitre','=','chapitre.id_chapitre')
+        ->Join('matiere','chapitre.id_matiere','=','matiere.id_matiere')
+        ->Join('question','qcm.id_qcm','=','question.id_qcm')
+        ->select('qcm.id_qcm','qcm.titre','chapitre.id_chapitre','chapitre.nom','matiere.*','question.question','question.type')
+        ->groupBy('question.id_question');
+ 
+        if ($request->ajax()) {
+            if (empty($request->matiere)) {
+                $question = $query->get();
+            } else {
+                $question = $query->where(['matiere.id_matiere' => $request->matiere])->get();
+            }
+            return response()->json(['question' => $question]);
+        }
+        $question = $query->get();
+
+        return view('admin.QCM.viewQuestion', compact('question'));
     }
 
 

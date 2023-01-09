@@ -31,6 +31,7 @@ TODO LIST :
 
 General : 
 
+- Refaire les migrations en fonction de la bdd
 - CSS complet
 - Sécurité global
 - Revoir tout Dropdown 
@@ -38,6 +39,8 @@ General :
 - HASH URL GET(Id)
 - Value input = Value in console 
 - MDP Random + Mail 
+- Message derreur et validation
+
 
 Guest : 
 
