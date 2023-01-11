@@ -273,21 +273,15 @@ class AdminQcmController extends Controller
         return view('admin.QCM.viewQCM', compact('chapitre', 'qcm'));
     }
     
-    public function editQcm($id_qcm){
+    public function editQcm(Request $request, $id_qcm){
         
+    $getQcm = Qcm::find($id_qcm);
+    $getQcm->titre = $request->titre;
 
-        $matieres = Matiere::all();
-        $formations = Formation::all();
+    $getQcm->save();
 
-        $getQcm = Qcm::find($id_qcm);
-        $qcm =DB::table('qcm')
-        ->select('qcm.*')
-        ->where('qcm.id_qcm','=',$getQcm->id_qcm)
-        ->get();
-
-        return view('admin.QCM.editQcm', compact('matieres','formations','getQcm','qcm'));
-
-
+    return redirect()->back()->with('success', 'Le Qcm a bien été Modifié');
+    
     }
 
     public function viewQuestion(){

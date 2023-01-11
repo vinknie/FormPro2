@@ -34,6 +34,11 @@
                 </tr>
                 </thead>
                 <tbody id="tbody">
+                    @if(session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                    @endif
                 
                 </tbody>
             </table>
@@ -111,13 +116,13 @@
                     console.log(data);
                     if(qcm.length > 0){
                         for(let i = 0; i<qcm.length; i++){
-                            let url = "backoffice/qcm/editQcm/"+qcm[i]["id_qcm"];
+                            let url = "backoffice/qcm/viewQcm/editQcm/"+qcm[i]["id_qcm"];
                             console.log(url);
                             html += '<tr>\
                                     <form class="" action="'+url+'" method="post" enctype="multipart/form-data">\
-                                        <td><input class="titreinputs" value="'+qcm[i]['titre']+'" disabled></td>\
+                                        <td><input class="titreinputs" name="titre" value="'+qcm[i]['titre']+'" disabled></td>\
                                         <td>'+qcm[i]['nom']+'</td>\
-                                        <td><button class="btn btn-primary editbuttons">Edit</button> <button type="submit" href="" class="btn btn-success d-none" id="form-submit" name="edittitre">Confirmer</button></td>\
+                                        <td><button class="btn btn-primary editbuttons">Edit</button> <button  type="submit" value="submit" class="btn btn-primary">Modifier</button></td>\
                                     </form>\
                                 </tr>';
 
@@ -144,24 +149,25 @@
         const edit = document.querySelectorAll('.editbuttons');
         const input = document.querySelectorAll('.titreinputs');
         const submit = document.querySelector('#form-submit');
-        
+        e.preventDefault();
 
-            // edit.forEach(function (btn, i){
-            //      btn.addEventListener('click',function(){
-            //         input[i].removeAttribute('disabled');
-            //     })
+            edit.forEach(function (btn, i){
+                 btn.addEventListener('click',function(){
+                    input[i].removeAttribute('disabled');
+                })
            
-            // // submit.classList.remove('d-none');
-            // // edit.classList.add('d-none');
-            // });
+            // submit.classList.remove('d-none');
+            // edit.classList.add('d-none');
+            });
 
-            for(let i=0 ; i<edit.length ; i++){
-                edit[i].addEventListener('click', function(i){
-                    console.log(i);
-                }.bind(null,i))
-            }
+            // for(let i=0 ; i<edit.length ; i++){
+            //     edit[i].addEventListener('click', function(i){
+            //         console.log(i);
+            //     }.bind(null,i))
+            // }
     })
-    
+
+
 
 </script> 
 
