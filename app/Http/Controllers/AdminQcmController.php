@@ -317,7 +317,7 @@ class AdminQcmController extends Controller
         ->Join('chapitre' , 'qcm.id_chapitre','=','chapitre.id_chapitre')
         ->Join('matiere','chapitre.id_matiere','=','matiere.id_matiere')
         ->Join('question','qcm.id_qcm','=','question.id_qcm')
-        ->select('qcm.id_qcm','qcm.titre','chapitre.id_chapitre','chapitre.nom','matiere.*','question.question','question.type')
+        ->select('qcm.id_qcm','qcm.titre','chapitre.id_chapitre','chapitre.nom','matiere.*','question.question','question.type','question.id_question')
         ->groupBy('question.id_question');
  
         if ($request->ajax()) {
@@ -332,6 +332,41 @@ class AdminQcmController extends Controller
 
         return view('admin.QCM.viewQuestion', compact('question'));
     }
+
+
+    public function editQuestion($id_question){
+
+        $getQuest = Question::find($id_question);
+        $getOption = DB::select('select id_option ,option , correct from option where id_question = '.$id_question);
+
+        return view('admin.QCM.editQuestion' , compact('getQuest','getOption'));
+
+    }
+    public function updateQuestion(Request $request, $id_question){
+        
+        $getQuest = Question::find($id_question);
+        $getQuest->question = $request->question;
+        $getQuest->point = $request->point;
+        $getQuest->type = $request->type;
+
+        $getQuest->save();
+
+        foreach($request->option as $key => $value){
+            if(isset($request->id_option[$key])){
+                $option = Option::find($request->id_option[$key]);
+            }else{
+                $option = new Option();
+            }
+            $option->id_question = $id_question;
+            $option->option = $request->option[$key];
+            $option->correct = $request->correct[$key];
+
+            $option->save();
+        }
+    
+        return redirect()->route('admin.QCM.viewQuestion')->with('success', 'La Question a bien été Modifié');
+        
+        }
 
 
 }

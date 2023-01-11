@@ -97,7 +97,7 @@
                                         <td>'+question[i]['question']+'</td>\
                                         <td>'+question[i]['titre']+'</td>\
                                         <td>'+question[i]['nom']+'</td>\
-                                        <td><a href="" class="btn btn-primary" id="editbutton">Edit</a></td>\
+                                        <td><a href="/backoffice/qcm/viewQuestion/editQuestion/'+question[i]["id_question"]+'" class="btn btn-primary" id="editbutton">Edit</a></td>\
                                 </tr>';
                             
                         }

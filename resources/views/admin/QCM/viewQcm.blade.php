@@ -25,7 +25,7 @@
                 <option id='test' value="">--Choisi une Matiere--</option>
             </select>
 
-            <table class="table table-bordered">
+            {{-- <table class="table table-bordered">
                 <thead>
                 <tr>
                     <th>Titre du QCM</th> 
@@ -41,7 +41,27 @@
                     @endif
                 
                 </tbody>
-            </table>
+            </table> --}}
+            @if(session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                    @endif
+            <div class="row">
+                <div class="col-6">
+                    <h3>Titre Du Qcm</h3>   
+                </div>
+                <div class="col-3">
+                    <h3>Chapitre</h3> 
+                </div>
+                <div class="col-3">
+                    <h3>Actions</h3> 
+                </div>
+            </div>
+            <div id="tbody">
+
+            </div>
+            
         </div>
     </div>
 
@@ -118,23 +138,28 @@
                         for(let i = 0; i<qcm.length; i++){
                             let url = "backoffice/qcm/viewQcm/editQcm/"+qcm[i]["id_qcm"];
                             console.log(url);
-                            html += '<tr>\
-                                    <form class="" action="'+url+'" method="post" enctype="multipart/form-data">\
-                                        <td><input class="titreinputs" name="titre" value="'+qcm[i]['titre']+'" disabled></td>\
-                                        <td>'+qcm[i]['nom']+'</td>\
-                                        <td><button class="btn btn-primary editbuttons">Edit</button> <button  type="submit" value="submit" class="btn btn-primary">Modifier</button></td>\
-                                    </form>\
-                                </tr>';
+                            html += '<form class="" action="http://localhost:8000/'+url+'" method="post" enctype="multipart/form-data">\
+                                @csrf\
+                                        <div class="row">\
+                                            <div class="col-6">\
+                                                <input class="titreinputs" name="titre" value="'+qcm[i]['titre']+'" disabled>\
+                                            </div>\
+                                            <div class="col-3">\
+                                                <p>'+qcm[i]['nom']+'</p>\
+                                            </div>\
+                                            <div class="col-3 append">\
+                                                    <button class="btn btn-primary editbuttons">Edit</button>\
+                                            </div>\
+                                        </div>\
+                                    </form>';
 
                         }
 
-                    
-
                     }
                     else{
-                        html += '<tr>\
-                            <td>Pas de QCM pour cette Matiere</td>\
-                            </tr>';
+                        html += '<div>\
+                            <p>Pas de QCM pour cette Matiere</p>\
+                            </div>';
                     }
                     $("#tbody").html(html);
                     
@@ -148,23 +173,27 @@
     document.body.addEventListener('click', function(e) {
         const edit = document.querySelectorAll('.editbuttons');
         const input = document.querySelectorAll('.titreinputs');
-        const submit = document.querySelector('#form-submit');
-        e.preventDefault();
+        const append = document.querySelectorAll('.append')
+        const button = document.createElement('button');
+        button.innerText= "Valider"
+        button.setAttribute('type', 'submit');
+        
 
             edit.forEach(function (btn, i){
-                 btn.addEventListener('click',function(){
+                btn.addEventListener('click',function(k){
                     input[i].removeAttribute('disabled');
+                    edit[i].classList.add('d-none');     
+                    
+                    
+                    append.forEach(function (el, j){
+                        el.appendChild(button);
+                    })
+                    
+                    
+                 
                 })
-           
-            // submit.classList.remove('d-none');
-            // edit.classList.add('d-none');
             });
-
-            // for(let i=0 ; i<edit.length ; i++){
-            //     edit[i].addEventListener('click', function(i){
-            //         console.log(i);
-            //     }.bind(null,i))
-            // }
+            
     })
 
 
