@@ -216,6 +216,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
     Route::get('/backoffice/qcm/viewQuestion/showQuestion','AdminQcmController@showQuestion')->name('showQuestion');
     Route::get('/backoffice/qcm/viewQuestion/editQuestion/{id_question}', 'AdminQcmController@editQuestion')->name('admin.QCM.editQuestion');
     Route::post('backoffice/qcm/viewQuestion/updateQuestion/{id_question}', 'AdminQcmController@updateQuestion')->name('admin.QCM.updateQuestion');
+    Route::post('backoffice/qcm/viewQuestion/updateOption', 'AdminQcmController@updateOption')->name('admin.QCM.updateOption');
 });
    
 

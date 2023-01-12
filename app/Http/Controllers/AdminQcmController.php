@@ -346,10 +346,18 @@ class AdminQcmController extends Controller
         
         $getQuest = Question::find($id_question);
         $getQuest->question = $request->question;
-        $getQuest->point = $request->point;
-        $getQuest->type = $request->type;
+        $getQuest->points = $request->points;
 
         $getQuest->save();
+
+    
+        return redirect()->back()->with('successQuestion', 'La Question a bien été Modifié');
+        
+        }
+    public function updateOption(Request $request)
+    {
+    
+    
 
         foreach($request->option as $key => $value){
             if(isset($request->id_option[$key])){
@@ -357,16 +365,13 @@ class AdminQcmController extends Controller
             }else{
                 $option = new Option();
             }
-            $option->id_question = $id_question;
             $option->option = $request->option[$key];
             $option->correct = $request->correct[$key];
 
             $option->save();
         }
-    
-        return redirect()->route('admin.QCM.viewQuestion')->with('success', 'La Question a bien été Modifié');
-        
-        }
+        return redirect()->route('admin.QCM.editQuestion')->with('successOption', 'Les Options ont bien été Modifié');
+    }
 
 
 }
