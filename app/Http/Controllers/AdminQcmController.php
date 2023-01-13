@@ -211,19 +211,7 @@ class AdminQcmController extends Controller
         }else{
             return redirect()->route('pages.login');
         }
-  
-        // $matieres = Matiere::all();
-        // $formations = Formation::all(); // Admin ; secretaire
-
-
-        // $formationFormateur=DB::table('utilisateurs')
-        // ->join('matiere', 'matiere.id_utilisateurs' , '=' , 'utilisateurs.id')
-        // ->join('formation','formation.id_formation' , '=' ,'matiere.id_formation')
-        // ->select('utilisateurs.nom' ,'utilisateurs.id' , 'utilisateurs.prenom','utilisateurs.email','utilisateurs.role','utilisateurs.sexe','utilisateurs.telephone','formation.nom AS nomForm','formation.date_debut','formation.date_fin','matiere.nom AS nomMat','matiere.id_utilisateurs AS idUserMat','matiere.id_matiere')
-        // ->where('utilisateurs.id' , '=' , $user->id)
-        // ->get();
-        
-        // return view('admin.QCM.viewQcm', compact('formations','formationFormateur'));   
+ 
         
     }
 
@@ -272,8 +260,15 @@ class AdminQcmController extends Controller
 
         return view('admin.QCM.viewQCM', compact('chapitre', 'qcm'));
     }
+    public function editQcm($id_qcm){
+
+        $getQcm = Qcm::find($id_qcm);
     
-    public function editQcm(Request $request, $id_qcm){
+
+        return view('admin.QCM.editQcm' , compact('getQcm'));
+
+    }
+    public function updateQcm(Request $request, $id_qcm){
         
     $getQcm = Qcm::find($id_qcm);
     $getQcm->titre = $request->titre;
@@ -332,16 +327,18 @@ class AdminQcmController extends Controller
 
         return view('admin.QCM.viewQuestion', compact('question'));
     }
+  
 
 
     public function editQuestion($id_question){
 
         $getQuest = Question::find($id_question);
-        $getOption = DB::select('select id_option ,option , correct from option where id_question = '.$id_question);
+        $getOption = DB::select('select id_option , id_question,option , correct from option where id_question = '.$id_question);
 
         return view('admin.QCM.editQuestion' , compact('getQuest','getOption'));
 
     }
+
     public function updateQuestion(Request $request, $id_question){
         
         $getQuest = Question::find($id_question);
@@ -353,24 +350,34 @@ class AdminQcmController extends Controller
     
         return redirect()->back()->with('successQuestion', 'La Question a bien été Modifié');
         
-        }
+    }
+
     public function updateOption(Request $request)
     {
-    
-    
 
+        
+    
         foreach($request->option as $key => $value){
             if(isset($request->id_option[$key])){
                 $option = Option::find($request->id_option[$key]);
             }else{
                 $option = new Option();
             }
+            $option->id_question = $request->id_question;
             $option->option = $request->option[$key];
             $option->correct = $request->correct[$key];
 
             $option->save();
         }
         return redirect()->route('admin.QCM.editQuestion')->with('successOption', 'Les Options ont bien été Modifié');
+    }
+
+    public function deleteQcm($id_qcm)
+    {
+        
+        $deleteQcm = Qcm::find($id_qcm)->delete();
+
+        return redirect()->back();
     }
 
 

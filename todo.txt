@@ -1,32 +1,3 @@
-
-->Quizz 
-->Presence
-->Stream 
-
--> HASH URL GET(Id)
--> Value input = Value in console 
-
--> Securité 
-
--> MDP Random + Mail 
-
-->Gestion roles
-
--> Responsive 
-
-uploader les documents des apprenants directement sur le site.
-
-signature docusign 
-
-Direct via : Teams , Zoom,
-
-A l'inscription ; 
-
-generer => Contrat formation ,  
-
-
-document signé avant formation ; contrat - 
-
 TODO LIST :
 
 General : 
@@ -81,11 +52,7 @@ Page Apprenant : - Ajouter un bouton pour creer un apprenant
 Page Formateur : - Ajouter un bouton pour creer un Formateur
                  - Ajouter une pagination
 
-Page Qcm :   - Creer un qcm : 
-             - Voir les Qcm : Modifier via input
-             - Creer une question : 
-             - Voir les question : Faire l'affichage et les modification via input
-             - Import Qcm : Faire la requete pour que tout senregistre bien en bdd avec les bons champs enctype
+Page Qcm :      - Import Qcm : Faire la requete pour que tout senregistre bien en bdd avec les bons champs enctype
 
 Page Satisfaction : Creer les QCM,
                     

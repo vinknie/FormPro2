@@ -18,6 +18,7 @@
                     @endif
                     <form class="" action="{{ route('admin.QCM.updateQuestion', $getQuest->id_question) }}" method="post" enctype="multipart/form-data">
                         @csrf
+                        
                         <label class="labels">Question?</label>
                         <input class="form-control" type="text" name="question" value="{{ $getQuest->question }}">
 
@@ -34,13 +35,17 @@
                         @foreach ($getOption as $option)
                         <label class="labels">Option</label>
                         @if($getQuest->type == 'truefalse')
+                            <input type="hidden" name="id_question" value="{{ $option->id_question }}">
                             <input type="text" class="form-control input" name="option[]" value="{{ $option->option }}" readonly="readonly">
                         @else
+                            <input type="hidden" name="id_question" value="{{ $option->id_question  }}">
                             <input type="text" class="form-control input" name="option[]" value="{{ $option->option }}" >
                         @endif
                         @if($option->correct == 1)
+                            <input type="hidden" name="id_question" value="{{ $option->id_question  }}">
                             <input class="form-check-input check" type="checkbox" name="correct[]" value="{{ $option->correct }}" id="flexCheckDefault" checked> 
                         @else
+                            <input type="hidden" name="id_question" value="{{ $option->id_question  }}">
                             <input class="form-check-input check" type="checkbox" name="correct[]" value="{{ $option->correct }}" id="flexCheckDefault"> 
                         @endif
                   

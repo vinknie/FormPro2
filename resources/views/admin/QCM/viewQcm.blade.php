@@ -25,24 +25,19 @@
                 <option id='test' value="">--Choisi une Matiere--</option>
             </select>
 
-            {{-- <table class="table table-bordered">
+            <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th>Titre du QCM</th> 
-                    <th>Chapitre</th>
-                    <td colspan = 3>Action</td>
+                    <th>Titre Qcm</th> 
+                    <th>Chapitre</th>   
+                    <td colspan = 2>Action</td>
                 </tr>
                 </thead>
                 <tbody id="tbody">
-                    @if(session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                    @endif
-                
+              
                 </tbody>
-            </table> --}}
-            @if(session('success'))
+            </table>
+            {{-- @if(session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}
                     </div>
@@ -58,8 +53,11 @@
                     <h3>Actions</h3> 
                 </div>
             </div>
-            <div id="tbody">
-
+            <div id="tbody"> --}}
+                <!-- Button trigger modal -->
+  
+  <!-- Modal -->
+ 
             </div>
             
         </div>
@@ -136,22 +134,13 @@
                     console.log(data);
                     if(qcm.length > 0){
                         for(let i = 0; i<qcm.length; i++){
-                            let url = "backoffice/qcm/viewQcm/editQcm/"+qcm[i]["id_qcm"];
-                            console.log(url);
-                            html += '<form class="" action="http://localhost:8000/'+url+'" method="post" enctype="multipart/form-data">\
-                                @csrf\
-                                        <div class="row">\
-                                            <div class="col-6">\
-                                                <input class="titreinputs" name="titre" value="'+qcm[i]['titre']+'" disabled>\
-                                            </div>\
-                                            <div class="col-3">\
-                                                <p>'+qcm[i]['nom']+'</p>\
-                                            </div>\
-                                            <div class="col-3 append">\
-                                                    <button class="btn btn-primary editbuttons">Edit</button>\
-                                            </div>\
-                                        </div>\
-                                    </form>';
+                           
+                            html += '<tr>\
+                                <td>'+qcm[i]['titre']+'</td>\
+                                <td>'+qcm[i]['nom']+'</td>\
+                                <td><a href="/backoffice/qcm/viewQcm/editQcm/'+qcm[i]["id_qcm"]+'" class="btn btn-primary" id="editbutton">Edit</a></td>\
+                                <td><a href="/backoffice/qcm/viewQcm/deleteQcm/'+qcm[i]["id_qcm"]+'" class="btn btn-danger" onclick="return confirm("Etes vous sur de vouloir Supprimé!?")" data-method="delete"><i class="fa fa-times"></td>\
+                                </tr>';
 
                         }
 
@@ -170,35 +159,46 @@
     });
 
         
-    document.body.addEventListener('click', function(e) {
-        const edit = document.querySelectorAll('.editbuttons');
-        const input = document.querySelectorAll('.titreinputs');
-        const append = document.querySelectorAll('.append')
-        const button = document.createElement('button');
-        button.innerText= "Valider"
-        button.setAttribute('type', 'submit');
-        
+    // document.body.addEventListener('click', function(e) {
+    //     const edit = document.querySelectorAll('.editbuttons');
+        // const input = document.querySelectorAll('.titreinputs');
+        // const append = document.querySelectorAll('.append')
+        // const button = document.createElement('button');
+        // button.innerText= "Valider"
+        // button.setAttribute('type', 'submit');
+        // e.preventDefault();
 
-            edit.forEach(function (btn, i){
-                btn.addEventListener('click',function(k){
-                    input[i].removeAttribute('disabled');
-                    edit[i].classList.add('d-none');     
+            // edit.forEach(function (btn, i){
+            //     btn.addEventListener('click',function(k){
+            //         input[i].removeAttribute('disabled');
+            //         edit[i].classList.add('d-none');     
                     
                     
-                    append.forEach(function (el, j){
-                        el.appendChild(button);
-                    })
+            //         append.forEach(function (el, j){
+            //             el.appendChild(button);
+            //         })
                     
                     
                  
-                })
-            });
+            //     })
+            // });
             
-    })
+    // })
 
 
 
 </script> 
 
 
+{{-- 
+@if(isset($_GET['editQcm'])) 
+        <form class="" action="" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <label class="labels">Option</label>
+                            <input type="text" class="form-control input" name="option[]" value="{{ }}" >
+                    
+                        <button id="btncreate" type="submit" class="btn btn-success">Modifier</button>    
+                    </form>
+
+ @endif --}}
 @endsection
