@@ -163,28 +163,43 @@
 
 
             let truefalse =
-                '<input type="text" class="form-control input" name="option[]" value="vrai" readonly="readonly">\
-                                 <input class="form-check-input check" type="checkbox" name="correct[]" value="" id="flexCheckDefault">\
+                                '<input type="text" class="form-control input" name="option[]" value="vrai" readonly="readonly">\
+                                    <select name="correct[]" id="correct">\
+                                        <option value="0">Mauvaise Réponse</option>\
+                                        <option value="1">Bonne Réponse</option>\
+                                    </select>\
                                  <input type="text" class="form-control input" name="option[]" value="faux" readonly="readonly">\
-                                 <input class="form-check-input check" type="checkbox" name="correct[]" value="" id="flexCheckDefault">';
+                                 <select name="correct[]" id="correct">\
+                                        <option value="0">Mauvaise Réponse</option>\
+                                        <option  value="1">Bonne Réponse</option>\
+                                    </select>';
 
             let multiple = '<input class="btn btn-warning" type="button" name="addOption" id="addOption" value="+option">\
                                  <div id="option">\
                                      <div class="optionSetup">\
                                          <input type="text" class="form-control input" name="option[]">\
-                                         <input class="form-check-input check" type="checkbox" value="" name="correct[]" id="flexCheckDefault">\
+                                         <select name="correct[]" id="correct">\
+                                        <option value="0">Mauvaise Réponse</option>\
+                                        <option value="1">Bonne Réponse</option>\
+                                    </select>\
                                          <input class="btn btn-warning" type="button" name="remove" id="remove" value="Supprimer">\
                                      </div>\
                                      <div class="optionSetup">\
                                          <input type="text" class="form-control input" name="option[]">\
-                                         <input class="form-check-input check" type="checkbox" value="" name="correct[]" id="flexCheckDefault">\
+                                         <select name="correct[]" id="correct">\
+                                        <option value="0">Mauvaise Réponse</option>\
+                                        <option value="1">Bonne Réponse</option>\
+                                    </select>\
                                          <input class="btn btn-warning" type="button" name="remove" id="remove" value="Supprimer">\
                                      </div>\
                                  </div>';
 
             let html = '<div class="optionSetup">\
                                                  <input type="text" class="form-control input" name="option[]" >\
-                                                 <input class="form-check-input check" type="checkbox" value="" name="correct[]" id="flexCheckDefault">\
+                                                 <select name="correct[]" id="correct">\
+                                        <option value="0">Mauvaise Réponse</option>\
+                                        <option value="1">Bonne Réponse</option>\
+                                    </select>\
                                                  <input class="btn btn-warning" type="button" name="remove" id="remove" value="Supprimer">\
                                              </div>';
 
@@ -228,40 +243,40 @@
         //     });
         // }
 
-        document.body.addEventListener('click', function(e) {
-            // if (event.target.id == 'btnSubmit') {
-            //     someFunc();
-            // };
+        // document.body.addEventListener('click', function(e) {
+        //     // if (event.target.id == 'btnSubmit') {
+        //     //     someFunc();
+        //     // };
 
-            if (e.target.classList.contains('check')) {
-                const input = document.querySelectorAll('.input')
-                const check = document.querySelectorAll('.check')
+        //     // if (e.target.classList.contains('check')) {
+        //     //     const input = document.querySelectorAll('.input')
+        //     //     const check = document.querySelectorAll('.check')
 
-                for (let i = 0; i < check.length; i++) {
-                    check[i].addEventListener('change', function(e) {
-                        if (this.checked) {
-                            this.value = input[i].value
-                        } else {
-                            this.value = ''
-                        }
-                        console.log(this.value);
-                    });
-                }
+        //     //     for (let i = 0; i < check.length; i++) {
+        //     //         check[i].addEventListener('change', function(e) {
+        //     //             if (this.checked) {
+        //     //                 this.value = input[i].value
+        //     //             } else {
+        //     //                 this.value = ''
+        //     //             }
+        //     //             console.log(this.value);
+        //     //         });
+        //     //     }
 
-                // for (let j = 0; j < check.length; j++) {
-                //     input[j].addEventListener('change', function(e) {
-                //         if (this.checked) {
-                //             this.value = check[j].value
-                //         } else {
-                //             this.value = ''
-                //         }
-                //         console.log(this.value);
-                //     });
-                // }
-            }
+        //     //     // for (let j = 0; j < check.length; j++) {
+        //     //     //     input[j].addEventListener('change', function(e) {
+        //     //     //         if (this.checked) {
+        //     //     //             this.value = check[j].value
+        //     //     //         } else {
+        //     //     //             this.value = ''
+        //     //     //         }
+        //     //     //         console.log(this.value);
+        //     //     //     });
+        //     //     // }
+        //     }
 
 
 
-        });
+        // });
     </script>
 @endsection

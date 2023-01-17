@@ -201,28 +201,28 @@ class PagesController extends Controller
     }
 
 
-    /* function QCM */ 
+    // /* function QCM */ 
 
-    public function create_qcm(Request $request)
-    {
-        $request->validate([
-            'question' => 'required',
-            'reponse1' => 'required',
-            'reponse2' => 'required',
-            'reponse3' => 'required',
-            'reponse4' => 'required',
+    // public function create_qcm(Request $request)
+    // {
+    //     $request->validate([
+    //         'question' => 'required',
+    //         'reponse1' => 'required',
+    //         'reponse2' => 'required',
+    //         'reponse3' => 'required',
+    //         'reponse4' => 'required',
 
-        ]);
-        $qcm = new Qcm([
-            'question' => $request->question,
-            'reponse1' => $request->reponse1,
-            'reponse2' => $request->reponse2,
-            'reponse3' => $request->reponse3,
-            'reponse4' => $request->reponse4,
-        ]);
-        $qcm->save();
-        return redirect()->back();
-    } 
+    //     ]);
+    //     $qcm = new Qcm([
+    //         'question' => $request->question,
+    //         'reponse1' => $request->reponse1,
+    //         'reponse2' => $request->reponse2,
+    //         'reponse3' => $request->reponse3,
+    //         'reponse4' => $request->reponse4,
+    //     ]);
+    //     $qcm->save();
+    //     return redirect()->back();
+    // } 
 
 
     

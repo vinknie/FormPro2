@@ -149,19 +149,43 @@ class AdminQcmController extends Controller
             
         $question->save();
 
-        $createOption = [];
+        // $createOption = [];
      
+        // foreach($request->option as $key => $value){
+        // //    dump(in_array($request->option[$key],$request->input('correct')));
+        //     array_push($createOption,[
+        //         'id_question' => $question['id_question'],
+        //         'option' => $request->option[$key],
+                
+        //         'correct' => $value('correct') ? 1 : 0,  // Check la value dans les 2 tableaux 
+        //     ]); 
+
+
+        //  }
         foreach($request->option as $key => $value){
-        //    dump(in_array($request->option[$key],$request->input('correct')));
-            array_push($createOption,[
-                'id_question' => $question['id_question'],
-                'option' => $request->option[$key],
-                'correct' => in_array($request->option[$key],$request->input('correct')) === true ? 1 : 0,  // Check la value dans les 2 tableaux 
-            ]); 
-         }
+            $options = New Option();
+            $options->id_question = $question->id_question;
+            $options->option = $request->option[$key];
+            $options ->correct = $request->correct[$key];
+
+            $options->save();
+        }
+
+        
+
+        //  $checkboxes = $_POST['checkbox'];
+        //  $check_arr = [];
+        // //  loopoing through checkboxes
+        // foreach($checkboxes as $checkbox) {
+        //     if(isset($checkbox)) {
+        //         array_push($check_arr, 1);
+        //     }else {
+        //         array_push($check_arr, 0);
+        //     }
+        // }
         //  dump($createOption);
         
-        Option::insert($createOption);
+        // Option::insert($createOption);
 
         return redirect()->back()->with('success', 'La Question a  bien été créé'); 
 
@@ -245,7 +269,7 @@ class AdminQcmController extends Controller
         $query = DB::table('qcm')
         ->Join('chapitre' , 'qcm.id_chapitre','=','chapitre.id_chapitre')
         ->Join('matiere','chapitre.id_matiere','=','matiere.id_matiere')
-        ->select('qcm.id_qcm','qcm.titre','chapitre.id_chapitre','chapitre.nom','matiere.*')
+        ->select('qcm.id_qcm','qcm.titre','chapitre.id_chapitre','chapitre.nom','matiere.*','qcm.actif')
         ->groupBy('qcm.id_qcm');
  
         if ($request->ajax()) {
@@ -369,7 +393,7 @@ class AdminQcmController extends Controller
 
             $option->save();
         }
-        return redirect()->route('admin.QCM.editQuestion')->with('successOption', 'Les Options ont bien été Modifié');
+        return redirect()->back()->with('successOption', 'Les Options ont bien été Modifié');
     }
 
     public function deleteQcm($id_qcm)
@@ -378,6 +402,20 @@ class AdminQcmController extends Controller
         $deleteQcm = Qcm::find($id_qcm)->delete();
 
         return redirect()->back();
+    }
+
+    public function changeActif($id_qcm){
+
+        $actif = Qcm::find($id_qcm);
+
+        if($actif->actif == 0){
+            $actif->update(['actif' => 1]);
+        }else{
+            $actif->update(['actif' => 0]);
+        }
+
+        $actif->save();
+        return redirect()->back()->with('actif', 'Status du Qcm Changé');
     }
 
 

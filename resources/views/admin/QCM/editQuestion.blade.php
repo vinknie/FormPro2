@@ -30,23 +30,38 @@
                 </div>
                 <div class="col-6">
                     <h3>Option: </h3>
+                    @if(session('successOption'))
+                    <div class="alert alert-success">
+                        {{ session('successOption') }}
+                    </div>
+                    @endif
                     <form class="" action="{{ route('admin.QCM.updateOption') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @foreach ($getOption as $option)
                         <label class="labels">Option</label>
                         @if($getQuest->type == 'truefalse')
                             <input type="hidden" name="id_question" value="{{ $option->id_question }}">
+                            <input type="hidden" name="id_option[]" value="{{ $option->id_option }}">
                             <input type="text" class="form-control input" name="option[]" value="{{ $option->option }}" readonly="readonly">
                         @else
                             <input type="hidden" name="id_question" value="{{ $option->id_question  }}">
+                            <input type="hidden" name="id_option[]" value="{{ $option->id_option }}">
                             <input type="text" class="form-control input" name="option[]" value="{{ $option->option }}" >
                         @endif
                         @if($option->correct == 1)
                             <input type="hidden" name="id_question" value="{{ $option->id_question  }}">
-                            <input class="form-check-input check" type="checkbox" name="correct[]" value="{{ $option->correct }}" id="flexCheckDefault" checked> 
+                            <input type="hidden" name="id_option[]" value="{{ $option->id_option }}">
+                            <select class="form-control" name="correct[]">
+                                <option value="{{ $option->correct }}">Bonne réponse</option>
+                                <option value="0">Mauvaise Reponse</option>
+                            </select>
                         @else
                             <input type="hidden" name="id_question" value="{{ $option->id_question  }}">
-                            <input class="form-check-input check" type="checkbox" name="correct[]" value="{{ $option->correct }}" id="flexCheckDefault"> 
+                            <input type="hidden" name="id_option[]" value="{{ $option->id_option }}">
+                            <select class="form-control" name="correct[]">
+                                <option value="{{ $option->correct }}">Mauvaise Reponse</option>
+                                <option value="0">Bonne réponse</option>
+                            </select>
                         @endif
                   
                          
@@ -63,5 +78,59 @@
 
 
     </div>
+
+    <script>
+
+        document.body.addEventListener('click', function(e) {
+          
+            const input = document.querySelectorAll('.input')
+            const check = document.querySelectorAll('.check')
+            if (e.target.classList.contains('check')) {
+
+                for (let i = 0; i < check.length; i++) {
+                    check[i].addEventListener('change', function(e) {
+                        if (this.checked) {
+                            this.value = input[i].value
+                            
+                        } else {
+                            this.value = ''
+                        }
+                        console.log(this.value);
+                    });
+
+                   
+                }
+            }
+            // if (e.target.classList.contains('check')) 
+            // for (let i = 0; i < check.length; i++) {
+            // input[i].addEventListener('keypress', function(k){
+            //             if (check[i].checked = true){
+            //                 check[i].value = input[i].value
+            //                 this.value = this.value 
+            //                 console.log(this.value)
+            //             }
+                        
+            //                 })
+            //             }
+        });
+        
+        $(document).ready(function(e) {
+            const input = document.querySelectorAll('.input')
+            const check = document.querySelectorAll('.check')
+            console.log(e)
+        
+            for (let i = 0; i < check.length; i++) {
+            input[i].addEventListener('keypress', function(k){
+                        if (check[i].checked = true){
+                            check[i].value = input[i].value
+                            this.value = input[i].value
+                            console.log(k.target.value)
+                        }
+                        
+                            })
+                        }
+});
+
+    </script>
 
 @endsection

@@ -52,7 +52,8 @@ Page Apprenant : - Ajouter un bouton pour creer un apprenant
 Page Formateur : - Ajouter un bouton pour creer un Formateur
                  - Ajouter une pagination
 
-Page Qcm :      - Import Qcm : Faire la requete pour que tout senregistre bien en bdd avec les bons champs enctype
+Page Qcm :      - Editer les options (checkbox)
+                - Import Qcm : Faire la requete pour que tout senregistre bien en bdd avec les bons champs enctype
 
 Page Satisfaction : Creer les QCM,
                     

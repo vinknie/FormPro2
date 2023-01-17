@@ -131,7 +131,7 @@
                 success:function(data){
                     var qcm = data.qcm;
                     var html = '';
-                    console.log(data);
+                    console.log(qcm);
                     if(qcm.length > 0){
                         for(let i = 0; i<qcm.length; i++){
                            
@@ -140,6 +140,14 @@
                                 <td>'+qcm[i]['nom']+'</td>\
                                 <td><a href="/backoffice/qcm/viewQcm/editQcm/'+qcm[i]["id_qcm"]+'" class="btn btn-primary" id="editbutton">Edit</a></td>\
                                 <td><a href="/backoffice/qcm/viewQcm/deleteQcm/'+qcm[i]["id_qcm"]+'" class="btn btn-danger" onclick="return confirm("Etes vous sur de vouloir Supprimé!?")" data-method="delete"><i class="fa fa-times"></td>\
+                                <td>'
+                                console.log(qcm[i]["actif"] )
+                                if(qcm[i]["actif"] === 0){
+                                    html += '<a href="/backoffice/qcm/viewQcm/changeActif/'+qcm[i]["id_qcm"]+'" class="btn btn-danger" id="inactif" onclick="return confirm("Etes vous sur de vouloir rendre le QCM Actif!?")"><i class="fa-solid fa-lock"></i></a>'
+                                }else{
+                                    html += '<a href="/backoffice/qcm/viewQcm/changeActif/'+qcm[i]["id_qcm"]+'" class="btn btn-success" id="actif" onclick="return confirm("Etes vous sur de vouloir rendre le Qcm Inactif!?")"><i class="fa-solid fa-unlock"></i></a>'
+                                }
+                                '</td>\
                                 </tr>';
 
                         }
