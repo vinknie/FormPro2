@@ -220,6 +220,13 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
     Route::get('/backoffice/qcm/viewQuestion/editQuestion/{id_question}', 'AdminQcmController@editQuestion')->name('admin.QCM.editQuestion');
     Route::post('backoffice/qcm/viewQuestion/updateQuestion/{id_question}', 'AdminQcmController@updateQuestion')->name('admin.QCM.updateQuestion');
     Route::post('backoffice/qcm/viewQuestion/updateOption', 'AdminQcmController@updateOption')->name('admin.QCM.updateOption');
+
+        // Question User
+    Route::get('/examen/qcm' , 'QuestionController@index')->name('pages.question');
+    Route::get('/examen/qcm/getMatiereUser/{id_formation}','QuestionController@getMatiereUser');
+    Route::get('/examen/qcm/filterChapiter','QuestionController@filterChapiter');
+    Route::get('/examen/qcm/{id_qcm}','QuestionController@viewQcm')->name('pages.quizz');
+    
 });
    
 

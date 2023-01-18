@@ -17,7 +17,7 @@
       </li>
       <li><a href="">Examen</a>
           <ul class="sous">
-              <li><a href="">QCM</a>
+              <li><a href="{{ route('pages.question') }}">QCM</a>
               </li>
               <li><a href="">Enoncé</a></li>
           </ul>
