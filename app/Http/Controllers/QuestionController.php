@@ -88,8 +88,9 @@ class QuestionController extends Controller
         $qcm =DB::table('qcm')
         ->join('question','question.id_qcm','=','qcm.id_qcm')
         ->join('option','option.id_question','=','question.id_question')
-        ->select('qcm.id_qcm','qcm.id_chapitre','qcm.titre','question.id_question','question.question','question.points','question.type',DB::raw('group_concat(option.option) as Option'))
+        ->select('qcm.id_qcm','qcm.id_chapitre','qcm.titre','question.id_question','question.question','question.points','question.type',DB::raw('group_concat(option.option) as Option'),DB::raw('group_concat(option.id_option) as IdOption'))
         ->where('qcm.id_qcm','=', $data->id_qcm)
+        ->groupBy('question.id_question')
         ->get();
 
      
