@@ -227,6 +227,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
     Route::get('/examen/qcm/filterChapiter','QuestionController@filterChapiter');
     Route::get('/examen/qcm/{id_qcm}','QuestionController@viewQcm')->name('pages.quizz');
     
+    Route::post('/examen/qcm/submitQuizz', 'QuestionController@submitQuizz')->name('submitQuizz');
 });
    
 

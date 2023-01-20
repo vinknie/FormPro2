@@ -9,6 +9,9 @@ use App\Models\Qcm;
 use App\Models\Formation;
 use App\Models\Matiere;
 use App\Models\Chapitre;
+use App\Models\Question;
+use App\Models\Option;
+use App\Models\Result;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -96,6 +99,40 @@ class QuestionController extends Controller
      
 
         return view('pages.quizz',compact('data','qcm'));
+    }
+
+    public function submitQuizz(Request $request){
+        
+        $correctAnswers = 0;
+        $wrongAnswers = [];
+        $answers = $request->input('answers');
+        $id_user = auth()->user()->id;
+        foreach($answers as $id_question => $answer){
+            $question = Question::find($id_question);
+            $options = Option::whereIn('id_option', $answers[$id_question])->get();
+            $correctOptions = [];
+            $results = [];
+            
+            foreach($options as $option){
+                if($option->correct){
+                    $correctAnswers++;
+                    $result = [
+                        'id_option' => $option->id_option,
+                        'id_utilisateur' => $id_user
+                    ];
+                    $results[] = $result;
+                }else{
+                    $wrongAnswers[] = $option;
+                }
+            }
+            if(!empty($results)){
+                Result::insert($results);
+            }
+        }
+        return redirect()->back()
+            ->with('correct_answers', $correctAnswers )
+            ->with('wrong_answers', $wrongAnswers );
+      
     }
 
         
