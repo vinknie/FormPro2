@@ -19,26 +19,25 @@ use App\Models\Matiere;
 use App\Models\UserFormation;
 
 use App\Http\Livewire\Formations;
-use App\Models\Utilisateur;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\DB;
 
 class PagesController extends Controller
 {
     /* function Accueil */
-    public function index() 
+    public function index()
     {
-     
+
 
         return view('pages.accueil');
     }
-  
+
     /* function elearning */
     public function elearning()
     {
         return view('pages.elearning');
     }
-    
+
     public function live()
     {
         return view('pages.live');
@@ -46,10 +45,10 @@ class PagesController extends Controller
 
     /* Function Register */
     public function register()
-    {   
-         $formations=Formation::all();
-       
-        return view('pages/register',compact('formations'));
+    {
+        $formations = Formation::all();
+
+        return view('pages/register', compact('formations'));
     }
 
     public function register_action(Request $request)
@@ -81,32 +80,32 @@ class PagesController extends Controller
             'complementAdresse' => $request->complementAdresse,
             'codePostal' => $request->codePostal,
             'ville' => $request->ville,
-            'pays' => $request->pays,            
+            'pays' => $request->pays,
             'date_naissance' => $request->date_naissance,
             'status' => $request->status,
             'role' => $request->role,
             'email' => $request->email,
             'username' => $request->username,
-            'password' => Hash::make($request->password), 
+            'password' => Hash::make($request->password),
         ]);
         $user->save();
-        
-        if($request->id_formation){
-        $userFormation= new UserFormation([
-                'id_formation'=>$request->id_formation,
-                'id_utilisateur'=>$user->id,
-            ]); 
+
+        if ($request->id_formation) {
+            $userFormation = new UserFormation([
+                'id_formation' => $request->id_formation,
+                'id_utilisateur' => $user->id,
+            ]);
             $userFormation->save();
         }
-        
-        return redirect()->route('pages.login')->with('success','Registration Success. Please Login!');
+
+        return redirect()->route('pages.login')->with('success', 'Registration Success. Please Login!');
     }
 
     /* Function Login */
     public function login()
     {
-      
-       
+
+
         return view('pages.login');
     }
 
@@ -116,12 +115,12 @@ class PagesController extends Controller
             'username' => 'required',
             'password' => 'required',
         ]);
-       if(Auth::attempt(['username'=>$request->username,'password'=>$request->password])){
-           
+        if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
+
             $request->session()->regenerate();
             return redirect()->intended('/');
-       }
-        return back()->withErrors(['password'=>'Mauvais Nom de compte ou mauvais mot de passe!']);
+        }
+        return back()->withErrors(['password' => 'Mauvais Nom de compte ou mauvais mot de passe!']);
     }
 
     /* Function Logout */
@@ -132,64 +131,64 @@ class PagesController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/');
-
     }
-    
+
     /* function Profil */
     public function profil()
     {
-       $user= Auth::User();
-       if(Auth::guest()){
-        return redirect()->route('pages.login');
-       }else{
-        $userFormation=DB::table('utilisateurs')
-        ->join('user_formation','utilisateurs.id', '=' , 'user_formation.id_utilisateur')
-        ->join('formation' ,'formation.id_formation', '=' , 'user_formation.id_formation')
-        ->select('utilisateurs.id','utilisateurs.prenom','utilisateurs.nom','utilisateurs.email','utilisateurs.username','utilisateurs.status','utilisateurs.role','utilisateurs.telephone','utilisateurs.niveau','utilisateurs.sexe','utilisateurs.adresse','utilisateurs.date_naissance','utilisateurs.complementAdresse','utilisateurs.codePostal','utilisateurs.ville','utilisateurs.pays' , 'formation.nom AS FormNom','formation.date_debut','formation.date_fin','user_formation.id_utilisateur', 'user_formation.id_formation')
-        ->where('user_formation.id_utilisateur' ,'=', $user->id) 
-        ->get();
+        $user = Auth::User();
+        if (Auth::guest()) {
+            return redirect()->route('pages.login');
+        } else {
+            $userFormation = DB::table('utilisateurs')
+                ->join('user_formation', 'utilisateurs.id', '=', 'user_formation.id_utilisateur')
+                ->join('formation', 'formation.id_formation', '=', 'user_formation.id_formation')
+                ->select('utilisateurs.id', 'utilisateurs.prenom', 'utilisateurs.nom', 'utilisateurs.email', 'utilisateurs.username', 'utilisateurs.status', 'utilisateurs.role', 'utilisateurs.telephone', 'utilisateurs.niveau', 'utilisateurs.sexe', 'utilisateurs.adresse', 'utilisateurs.date_naissance', 'utilisateurs.complementAdresse', 'utilisateurs.codePostal', 'utilisateurs.ville', 'utilisateurs.pays', 'formation.nom AS FormNom', 'formation.date_debut', 'formation.date_fin', 'user_formation.id_utilisateur', 'user_formation.id_formation')
+                ->where('user_formation.id_utilisateur', '=', $user->id)
+                ->get();
 
-        return view('profil.profil',compact('user','userFormation'));
-    }
+            return view('profil.profil', compact('user', 'userFormation'));
+        }
     }
 
-    public function pdfprofil(){
+    public function pdfprofil()
+    {
         // $getformation= Formation::find($id_formation);
 
-        $user= Auth::User();
-       if(Auth::guest()){
-        return view('pages.login');
-       }else{
-        $userFormation1=DB::table('utilisateurs')
-        ->join('user_formation','utilisateurs.id', '=' , 'user_formation.id_utilisateur')
-        ->join('formation' ,'formation.id_formation', '=' , 'user_formation.id_formation')
-        ->select('utilisateurs.id','utilisateurs.prenom','utilisateurs.nom', 'formation.nom AS FormNom','formation.date_debut','formation.date_fin','user_formation.id_utilisateur', 'user_formation.id_formation')
-        ->where('user_formation.id_utilisateur' ,'=', $user->id) 
-        ->get();
+        $user = Auth::User();
+        if (Auth::guest()) {
+            return view('pages.login');
+        } else {
+            $userFormation1 = DB::table('utilisateurs')
+                ->join('user_formation', 'utilisateurs.id', '=', 'user_formation.id_utilisateur')
+                ->join('formation', 'formation.id_formation', '=', 'user_formation.id_formation')
+                ->select('utilisateurs.id', 'utilisateurs.prenom', 'utilisateurs.nom', 'formation.nom AS FormNom', 'formation.date_debut', 'formation.date_fin', 'user_formation.id_utilisateur', 'user_formation.id_formation')
+                ->where('user_formation.id_utilisateur', '=', $user->id)
+                ->get();
 
-        return view('profil.pdfprofil',compact('user','userFormation1'));
+            return view('profil.pdfprofil', compact('user', 'userFormation1'));
+        }
     }
-    }
-  
+
     public function pdf1($id_formation)
     {
-        $getformation=Formation::find($id_formation);
-        $user= Auth::User();
+        $getformation = Formation::find($id_formation);
+        $user = Auth::User();
 
-        $userFormation=DB::table('utilisateurs')
-        ->join('user_formation','utilisateurs.id', '=' , 'user_formation.id_utilisateur')
-        ->join('formation' ,'formation.id_formation', '=' , 'user_formation.id_formation')
-        ->select('utilisateurs.id','utilisateurs.prenom','utilisateurs.nom', 'formation.nom AS FormNom','formation.date_debut','formation.date_fin','user_formation.id_utilisateur', 'user_formation.id_formation')
-        ->where('user_formation.id_utilisateur' ,'=', $user->id) 
-        ->where('user_formation.id_formation','=', $getformation->id_formation)
-        ->get();
-    
+        $userFormation = DB::table('utilisateurs')
+            ->join('user_formation', 'utilisateurs.id', '=', 'user_formation.id_utilisateur')
+            ->join('formation', 'formation.id_formation', '=', 'user_formation.id_formation')
+            ->select('utilisateurs.id', 'utilisateurs.prenom', 'utilisateurs.nom', 'formation.nom AS FormNom', 'formation.date_debut', 'formation.date_fin', 'user_formation.id_utilisateur', 'user_formation.id_formation')
+            ->where('user_formation.id_utilisateur', '=', $user->id)
+            ->where('user_formation.id_formation', '=', $getformation->id_formation)
+            ->get();
+
         $pdf = PDF::loadView('profil.pdf', compact('userFormation'))->output();
         return response()->streamDownload(
-            fn ()=> print($pdf),
-            "Attestion_".$userFormation[0]->FormNom."_"."$user->nom"."_"."$user->prenom".".pdf"
+            fn () => print($pdf),
+            "Attestion_" . $userFormation[0]->FormNom . "_" . "$user->nom" . "_" . "$user->prenom" . ".pdf"
         );
-    //    return view('profil.pdf',compact('userFormation'));
+        //    return view('profil.pdf',compact('userFormation'));
         // return $pdf->download('Attestion_' .  $user->nom . '_' . $user->prenom . '.pdf');
     }
 
@@ -200,7 +199,23 @@ class PagesController extends Controller
         return view('pages.satisfaction');
     }
 
+    // feuille presence
+    public function presenceProfil()
+    {
+        $current_user_id = Auth::user()->id;
+        $userRole = (User::find($current_user_id))->role;
+        if ($userRole === 'formateur') {
+            $formation_id   = (Matiere::where('id_utilisateurs', $current_user_id)->distinct()->get('id_formation'))[0]->id_formation;
+            $eleves         = DB::table('utilisateurs')
+                ->join('user_formation', 'user_formation.id_utilisateur', '=', 'utilisateurs.id')
+                ->select('utilisateurs.*')
+                ->where('user_formation.id_formation', '=', $formation_id)
+                ->get();
+        }
+        return view('profil.presence', compact('userRole', 'eleves'));
+    }
 
+    // select `utilisateurs`.* from `utilisateurs` inner join `user_formation` on `user_formation`.`id_id_utilisateur` = `utilisateurs`.`id`
     // /* function QCM */ 
 
     // public function create_qcm(Request $request)
@@ -225,7 +240,7 @@ class PagesController extends Controller
     // } 
 
 
-    
+
 
 
 
@@ -237,16 +252,16 @@ class PagesController extends Controller
     //           'nomformation' => 'required',
     //           'date_debut' => 'required',
     //           'date_fin' => 'required' ,
-              
+
     //         ]);
 
     //       $formation = new Formation();
     //       $formation->nom = $request->nomformation;
     //       $formation->date_debut = $request->date_debut;
     //       $formation->date_fin = $request->date_fin;
-              
+
     //       $formation->save();
-     
+
     //       return redirect()->back();
     //   } 
 
@@ -255,8 +270,8 @@ class PagesController extends Controller
 
     //   public function create_matiere(Request $request){
 
-        
-       
+
+
     //     $matieres=[];
     //     foreach($request->nommatiere as $key => $value){
     //         array_push($matieres,[
@@ -269,20 +284,20 @@ class PagesController extends Controller
     //     Matiere::insert($matieres);
 
     //      return redirect()->back(); 
-        
-    
+
+
 
     //   }
 
 
-      
+
     //   /* function Choisi un formateur */
 
     //   private function select_formateur()
     //   {
     //       $selectformateur=DB::select('select id , CONCAT(nom, " ", prenom) AS nom_complet from utilisateurs where role = "formateur"');
     //       return $selectformateur ;
-          
+
     //   }
     //   private function select_formation()
     //   {
@@ -294,14 +309,14 @@ class PagesController extends Controller
     //     $selectmatiere=DB::select('select id_matiere , nom from matiere');
     //     return $selectmatiere;
     //   }
-    
+
     //   /* Function ADMIN !!!!! */ 
 
     //   public function admin()
     //   {
     //     $getformations=Formation::all();
     //     $getmatieres=Matiere::all();
-        
+
     //     $selectmatiere=$this->select_matiere();
     //     $selectformateur=$this->select_formateur();
     //     $selectformation=$this->select_formation();
@@ -312,12 +327,12 @@ class PagesController extends Controller
 
     //   public function create_all(Request $request){
 
-       
+
     //     $formation = new Formation();
     //     $formation->nom = $request->nomformation;
     //     $formation->date_debut = $request->date_debut;
     //     $formation->date_fin = $request->date_fin;
-            
+
     //     $formation->save();
     //     $matieres=[];
 
@@ -340,12 +355,12 @@ class PagesController extends Controller
     // {
     //     $getformation= Formation::find($id_formation);
     //     $getmatieres=DB::select('select id_matiere, nom, id_utilisateurs from matiere where id_formation = '.$id_formation);
-    
-        
-        
+
+
+
     //     $selectformateur=$this->select_formateur();
     //     return view('pages.edit' , compact('getformation','getmatieres','selectformateur'));
-        
+
     // }
 
     //  /* function update formation + Matiere */
@@ -359,7 +374,7 @@ class PagesController extends Controller
 
     //     $getformation->save();
 
-       
+
 
     //     foreach($request->nommatiere as $key => $value){
     //         if(isset($request->id_matiere[$key])){
@@ -376,27 +391,27 @@ class PagesController extends Controller
 
     //     // $matiereId= Matiere::find($request->id_matiere[$key]);
     //     // $tabmatiere=array(matiereId);
-        
+
     //     // $mat=Matiere::all();
     //     // $matieresbdd= $mat->pluck('id_matiere')->all();
 
     //     // foreach
 
-        
+
 
     //     return redirect()->route('pages.admin')->with('success','Formation Mise a Jour!');
     // }
-    
+
     // /* function Delete formation + Matiere */
 
     // public function delete($id_formation)
     // {
-        
+
     //     $deleteformation = Formation::find($id_formation)->delete();
 
     //     return redirect()->route('pages.admin');
     // }
 
-      
+
 
 }

@@ -32,6 +32,7 @@
         <ul class="sous">
             <li><a href="{{ route('profil.profil') }}">Mon Profil</a></li>
             <li><a href="{{ route('profil.pdfprofil') }}">Mes PDFs</a></li>
+            <li><a href="{{ route('profil.presence') }}">Presence</a></li>
             <li><a href="">Mes Notes</a></li>
         </ul>
     </li>
