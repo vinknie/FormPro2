@@ -2,7 +2,7 @@
 
 @section("content")
 
-<form class="" action="{{ route('submitQuizz') }}" method="post" enctype="multipart/form-data">
+<form class="" action="{{ route('submitQuizz' , $qcm[0]->id_qcm) }}" method="post" enctype="multipart/form-data" >
     @csrf
 <div>
     <h1>Quizz {{ $qcm[0]->titre }} </h1>
