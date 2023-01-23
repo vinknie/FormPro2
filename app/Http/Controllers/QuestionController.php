@@ -12,6 +12,7 @@ use App\Models\Chapitre;
 use App\Models\Question;
 use App\Models\Option;
 use App\Models\Result;
+use App\Models\Notes;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -101,20 +102,35 @@ class QuestionController extends Controller
         return view('pages.quizz',compact('data','qcm'));
     }
 
-    public function submitQuizz(Request $request){
+    public function submitQuizz(Request $request , $id_qcm){
         
+        $qcm = Qcm::find($id_qcm);
+        $score = 0;
         $correctAnswers = 0;
         $wrongAnswers = [];
         $answers = $request->input('answers');
         $id_user = auth()->user()->id;
+        if(!$answers){
+            $score = 0;
+
+            $note = [
+                'id_eleve' => $id_user,
+                'id_chapitre' => $qcm->id_chapitre,
+                'note' =>$score,
+            ];
+            Notes::insert($note);
+
+            return redirect()->back()
+                ->with('score', $score);
+        }
         foreach($answers as $id_question => $answer){
             $question = Question::find($id_question);
             $options = Option::whereIn('id_option', $answers[$id_question])->get();
             $correctOptions = [];
-            $results = [];
-            
+            $results = [];              
             foreach($options as $option){
                 if($option->correct){
+                    $score += $question->points;
                     $correctAnswers++;
                     $result = [
                         'id_option' => $option->id_option,
@@ -129,12 +145,19 @@ class QuestionController extends Controller
                 Result::insert($results);
             }
         }
+        $note = [
+            'id_eleve' => $id_user,
+            'id_chapitre' => $qcm->id_chapitre,
+            'note' =>$score,
+        ];
+        Notes::insert($note);
+       
+
         return redirect()->back()
-            ->with('correct_answers', $correctAnswers )
-            ->with('wrong_answers', $wrongAnswers );
+        ->with('correctAnswers', $correctAnswers )
+        ->with('wrongAnswers', $wrongAnswers );
       
     }
-
-        
+    
 
 }
