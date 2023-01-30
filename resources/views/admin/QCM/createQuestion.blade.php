@@ -42,7 +42,7 @@
                     <label class="labels">Question?</label>
                     <input class="form-control" type="text" name="question" required="">
 
-                    <label class="labels">Point de la question</label>
+                    <label class="labels">Point des bonnes réponses</label>
                     <input class="form-control" type="text" name="points" required="">
 
                     <select name="type" id="selecttype">

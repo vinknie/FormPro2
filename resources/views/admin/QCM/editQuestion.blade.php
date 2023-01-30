@@ -22,7 +22,7 @@
                         <label class="labels">Question?</label>
                         <input class="form-control" type="text" name="question" value="{{ $getQuest->question }}">
 
-                        <label class="labels">Point de la question</label>
+                        <label class="labels">Point des bonnes réponses</label>
                         <input class="form-control" type="text" name="points" value="{{ $getQuest->points }}">
                         
                         <button id="btncreate" type="submit" class="btn btn-success">Modifier</button>    

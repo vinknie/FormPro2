@@ -92,7 +92,7 @@ class QuestionController extends Controller
         $qcm =DB::table('qcm')
         ->join('question','question.id_qcm','=','qcm.id_qcm')
         ->join('option','option.id_question','=','question.id_question')
-        ->select('qcm.id_qcm','qcm.id_chapitre','qcm.titre','question.id_question','question.question','question.points','question.type',DB::raw('group_concat(option.option) as Option'),DB::raw('group_concat(option.id_option) as IdOption'))
+        ->select('qcm.id_qcm','qcm.id_chapitre','qcm.titre','question.id_question','question.question','question.points','question.type',DB::raw('group_concat(option.option) as Option'),DB::raw('group_concat(option.id_option) as IdOption'),DB::raw('group_concat(option.correct) as Correct'))
         ->where('qcm.id_qcm','=', $data->id_qcm)
         ->groupBy('question.id_question')
         ->get();
@@ -122,21 +122,20 @@ class QuestionController extends Controller
 
             return redirect()->back()
                 ->with('score', $score);
-        }
+        }   
         foreach($answers as $id_question => $answer){
             $question = Question::find($id_question);
             $options = Option::whereIn('id_option', $answers[$id_question])->get();
-            $correctOptions = [];
-            $results = [];              
+            // $correctOptions = [];
+                      $results = []; 
             foreach($options as $option){
                 if($option->correct){
                     $score += $question->points;
                     $correctAnswers++;
-                    $result = [
+                    $results[] = [
                         'id_option' => $option->id_option,
                         'id_utilisateur' => $id_user
                     ];
-                    $results[] = $result;
                 }else{
                     $wrongAnswers[] = $option;
                 }
@@ -152,12 +151,14 @@ class QuestionController extends Controller
         ];
         Notes::insert($note);
        
-
-        return redirect()->back()
-        ->with('correctAnswers', $correctAnswers )
-        ->with('wrongAnswers', $wrongAnswers );
+        // dd($results);
+      return redirect()->back()
+            ->with('correctAnswers', $correctAnswers)
+            ->with('wrongAnswers', $wrongAnswers);
       
     }
     
+
+
 
 }
